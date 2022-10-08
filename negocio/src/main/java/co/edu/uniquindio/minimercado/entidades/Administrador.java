@@ -2,10 +2,8 @@ package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @ToString
@@ -15,7 +13,18 @@ import javax.persistence.MappedSuperclass;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Administrador extends Persona{
 
-    public Administrador(String cedula, String nombre, String correo) {
+    @ToString.Exclude
+    private String password;
+
+    @OneToMany(mappedBy = "administrador")
+    private List<Pedido> pedidos;
+
+    @ElementCollection
+    private List<String> telefonos;
+
+    public Administrador(String cedula, String nombre, String correo, String password, List<String> telefonos) {
         super(cedula, nombre, correo);
+        this.password = password;
+        this.telefonos = telefonos;
     }
 }

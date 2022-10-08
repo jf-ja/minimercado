@@ -14,18 +14,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Cliente extends Persona implements Serializable {
+public class Provedor extends Persona implements Serializable {
 
-    public Cliente(String cedula, String nombre, String correo) {
-        super(cedula, nombre, correo);
-    }
-    @OneToMany(mappedBy = "cliente")
-    private List<Factura> facturas;
+    @OneToMany(mappedBy = "provedor")
+    private List<Pedido> pedidos;
 
     @ElementCollection
     private List<String> telefonos;
 
-    public Cliente(String cedula, String nombre, String correo, List<String> telefonos) {
+    public Provedor(String cedula, String nombre, String correo, List<String> telefonos) {
         super(cedula, nombre, correo);
         this.telefonos = telefonos;
     }

@@ -3,8 +3,11 @@ package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @ToString
@@ -14,7 +17,16 @@ import java.io.Serializable;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Empleado extends Persona implements Serializable {
 
-    public Empleado(String cedula, String nombre, String correo) {
+    @OneToMany(mappedBy = "empleado")
+    private List<Factura> facturas;
+
+    @ElementCollection
+    private List<String> telefonos;
+
+    public Empleado(String cedula, String nombre, String correo, List<String> telefonos) {
         super(cedula, nombre, correo);
+        this.telefonos = telefonos;
     }
+
+
 }

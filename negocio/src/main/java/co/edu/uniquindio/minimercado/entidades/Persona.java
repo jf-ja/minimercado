@@ -2,11 +2,9 @@ package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
 
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @MappedSuperclass
 @ToString
@@ -30,4 +28,6 @@ public class Persona implements Serializable {
         this.nombre = nombre;
         this.correo = correo;
     }
+
+
 }
