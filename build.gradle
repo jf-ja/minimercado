@@ -11,7 +11,7 @@ configurations {
 allprojects{
     group 'co.edu.uniquindio.unicine'
     version '1.0-SNAPSHOT'
-    description 'Unicine es cadena de cines en Colombia'
+    description 'minimercado es una empresa de la ciudad de circasia en Colombia'
 
     repositories {
         mavenCentral()

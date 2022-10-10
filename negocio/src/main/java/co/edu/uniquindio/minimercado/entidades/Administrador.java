@@ -3,6 +3,7 @@ package co.edu.uniquindio.minimercado.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Administrador extends Persona{
+public class Administrador extends Persona implements Serializable {
 
     @ToString.Exclude
     private String password;
