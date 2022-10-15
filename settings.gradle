@@ -1,3 +1,4 @@
 rootProject.name = 'minimercado'
 include 'negocio'
+include 'web'
 

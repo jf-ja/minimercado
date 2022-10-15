@@ -13,15 +13,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente extends Persona implements Serializable {
 
     public Cliente(String cedula, String nombre, String correo) {
         super(cedula, nombre, correo);
     }
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "cliente")
     private List<Factura> facturas;
 
+    @ToString.Exclude
     @ElementCollection
     private List<String> telefonos;
 

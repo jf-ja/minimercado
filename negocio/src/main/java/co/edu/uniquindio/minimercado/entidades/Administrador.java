@@ -11,15 +11,16 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Administrador extends Persona implements Serializable {
 
     @ToString.Exclude
     private String password;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "administrador")
     private List<Pedido> pedidos;
 
+    @ToString.Exclude
     @ElementCollection
     private List<String> telefonos;
 

@@ -21,6 +21,8 @@ public class Categoria implements Serializable {
 
     private String nombre;
 
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
 

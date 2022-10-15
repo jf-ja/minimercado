@@ -33,9 +33,11 @@ public class Producto implements Serializable {
     @ManyToOne
     private Descuento descuento;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "producto")
     private List<PedidoProducto> pedidoProductos;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "producto")
     private List<FacturaProducto> facturaProductos;
 

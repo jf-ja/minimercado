@@ -31,6 +31,7 @@ public class Factura implements Serializable {
     @ManyToOne
     private Fecha fecha;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "factura")
     private List<FacturaProducto> facturaProductos;
 

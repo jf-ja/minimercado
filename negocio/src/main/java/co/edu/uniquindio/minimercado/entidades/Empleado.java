@@ -14,12 +14,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Empleado extends Persona implements Serializable {
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "empleado")
     private List<Factura> facturas;
 
+    @ToString.Exclude
     @ElementCollection
     private List<String> telefonos;
 

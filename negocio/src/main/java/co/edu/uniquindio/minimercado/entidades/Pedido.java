@@ -33,6 +33,7 @@ public class Pedido implements Serializable {
     @ManyToOne
     private Fecha fecha;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "pedido")
     private List<PedidoProducto> pedidoProductos;
 

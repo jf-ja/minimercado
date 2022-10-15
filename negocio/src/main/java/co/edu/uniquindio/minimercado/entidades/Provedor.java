@@ -13,12 +13,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Provedor extends Persona implements Serializable {
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "provedor")
     private List<Pedido> pedidos;
 
+    @ToString.Exclude
     @ElementCollection
     private List<String> telefonos;
 

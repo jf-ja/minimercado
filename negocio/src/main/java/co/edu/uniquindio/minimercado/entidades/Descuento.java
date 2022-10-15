@@ -20,6 +20,7 @@ public class Descuento implements Serializable {
 
     private Double porcentaje;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "descuento")
     private List<Producto> productos;
 
