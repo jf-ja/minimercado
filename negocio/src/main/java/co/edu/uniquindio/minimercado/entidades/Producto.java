@@ -26,11 +26,13 @@ public class Producto implements Serializable {
     private double precio;
 
     @ManyToOne
+    @Nullable
     private Fecha fecha;
 
     private Integer unidades;
 
     @ManyToOne
+    @Nullable
     private Descuento descuento;
 
     @ToString.Exclude

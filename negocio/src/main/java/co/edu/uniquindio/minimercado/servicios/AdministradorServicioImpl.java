@@ -44,6 +44,16 @@ public class AdministradorServicioImpl implements AdministradorServicio{
         return productoRepo.save(producto);
     }
 
+    @Override
+    public Producto obtenerProducto(Integer codigo) throws Exception {
+
+        Optional<Producto> producto = productoRepo.findById(codigo);
+        if(producto.isEmpty()){
+            throw new Exception("No existe el producto con ese codigo ");
+        }
+        return producto.get();
+    }
+
     public boolean productoExiste(Integer codigo){
         return productoRepo.findById(codigo).orElse(null)!=null;
     }

@@ -1,8 +1,8 @@
 /* Administrador : cedula, correo, nombre, password */
 insert into administrador values ("111", "admin1@gmail.com", "Lau" , "123");
-insert into administrador values ("222", "admin1@gmail.com", "Juan" , "000");
-insert into administrador values ("333", "admin1@gmail.com", "Sara" , "345");
-insert into administrador values ("444", "admin1@gmail.com", "Andres" , "678");
+insert into administrador values ("222", "admin2@gmail.com", "Juan" , "000");
+insert into administrador values ("333", "admin3@gmail.com", "Sara" , "345");
+insert into administrador values ("444", "admin4@gmail.com", "Andres" , "678");
 
 /* Administrador_telefonos : cedula, telefonos*/
 insert into administrador_telefonos values ("444", "3124567900");
