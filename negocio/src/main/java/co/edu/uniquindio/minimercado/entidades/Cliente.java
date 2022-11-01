@@ -1,6 +1,7 @@
 package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@ToString
+@ToString(callSuper = true)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,8 +26,9 @@ public class Cliente extends Persona implements Serializable {
 
     @ToString.Exclude
     @ElementCollection
+    @Nullable
     private List<String> telefonos;
-
+    @Builder
     public Cliente(String cedula, String nombre, String correo, List<String> telefonos) {
         super(cedula, nombre, correo);
         this.telefonos = telefonos;

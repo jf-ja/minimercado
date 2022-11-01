@@ -1,6 +1,8 @@
 package co.edu.uniquindio.minimercado.servicios;
 
+import co.edu.uniquindio.minimercado.entidades.Cliente;
 import co.edu.uniquindio.minimercado.entidades.Factura;
+import co.edu.uniquindio.minimercado.repo.ClienteRepo;
 import co.edu.uniquindio.minimercado.repo.EmpleadoRepo;
 import co.edu.uniquindio.minimercado.repo.FacturaRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,12 @@ import java.util.Optional;
 public class EmpleadoServicioImpl implements EmpleadoServicio{
 
     @Autowired
-    private EmpleadoRepo empleadoRepo;
-
     private FacturaRepo facturaRepo;
+    private ClienteRepo clienteRepo;
 
-    public EmpleadoServicioImpl(EmpleadoRepo empleadoRepo, FacturaRepo facturaRepo) {
-        this.empleadoRepo = empleadoRepo;
+    public EmpleadoServicioImpl(FacturaRepo facturaRepo, ClienteRepo clienteRepo) {
         this.facturaRepo = facturaRepo;
+        this.clienteRepo = clienteRepo;
     }
 
     @Override
@@ -62,4 +63,74 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
     public List<Factura> listarFacturas() {
         return facturaRepo.findAll();
     }
+
+
+    //---------------------------------- CRUD DE CLIENTE --------------------------------
+
+    @Override
+    public Cliente registrarCliente(Cliente cliente) throws Exception{
+
+        boolean correoExiste = esRepetido(cliente.getCorreo());
+        if(correoExiste){
+            throw new Exception("El Correo ya esta en Uso");
+        }
+        //cedula
+        boolean cedulaExiste = cedulaRepetida(cliente.getCedula());
+        if(cedulaExiste){
+            throw  new Exception("La cedula ingresada ya existe");
+        }
+
+        return clienteRepo.save(cliente);
+    }
+
+    private boolean esRepetido(String correo){
+        return clienteRepo.findByCorreo(correo).orElse(null) != null;
+    }
+
+    private boolean cedulaRepetida(String cedula) {
+        return clienteRepo.existsById(cedula);
+    }
+
+
+    @Override
+    public Cliente obtenerClientePorCedula(String cedula) throws Exception {
+
+        Optional<Cliente> clienteGuardado = clienteRepo.findById(cedula);
+
+        if(clienteGuardado.isEmpty()){
+            throw new Exception("El cliente NO EXISTE");
+        }
+
+        return clienteGuardado.get();
+    }
+
+    @Override
+    public Cliente actualizarCliente(Cliente cliente) throws Exception{
+
+        Optional<Cliente> clienteGuardado = clienteRepo.findById(cliente.getCedula());
+
+        if (clienteGuardado.isEmpty()){
+            throw new Exception("El cliente NO EXISTE");
+        }
+        return clienteRepo.save(cliente);
+    }
+
+    @Override
+    public void eliminarCliente(String codigoCliente) throws Exception{
+
+        Optional<Cliente> clienteGuardado = clienteRepo.findById(codigoCliente);
+
+        if(clienteGuardado.isEmpty()){
+            throw new Exception("El cliente NO EXISTE");
+        }
+
+        clienteRepo.delete(clienteGuardado.get());
+    }
+
+    @Override
+    public List<Cliente> listarClientes() {
+        return clienteRepo.findAll();
+    }
+
+
 }

@@ -13,5 +13,16 @@ import java.io.Serializable;
 @Setter
 public class InicioBean implements Serializable {
 
-    String mensaje = "Mi primer pagina jsf";
+    private String mensaje = "Mi primer pagina jsf minimercado";
+
+    private String dato1, dato2;
+
+
+    public void cambiarValores(){
+        String aux = dato1 ;
+        dato1 = dato2;
+        dato2 = aux;
+    }
+
+
 }
