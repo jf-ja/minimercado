@@ -12,25 +12,29 @@
 </h:head>
 
 
-<h:body style="background-color: darkgray">
+<h:body style="background-color: whitesmoke">
+    <p:panel>
+        <h1>REGISTRO CLIENTE</h1>
+            <h:form>
+                <h:panelGrid columns="3" cellpadding="5" >
 
-    <h1>REGISTRO CLIENTE</h1>
-    <h:form>
-        <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="cedula_cliente" value = "Cedula: "/>
+                    <p:inputText id="cedula_cliente" value = "#{clienteBean.cliente.cedula}" required="true"/>
+                    <p:messages for="cedula_cliente"/>
 
-            <p:outputLabel for="cedula_cliente" value = "Cedula: "/>
-            <p:inputText id="cedula_cliente" value = "#{clienteBean.cliente.cedula}" required="true"/>
+                    <p:outputLabel for="nombre_cliente" value = "Nombre: "/>
+                    <p:inputText id="nombre_cliente" value = "#{clienteBean.cliente.nombre}" required="true"/>
+                    <p:messages for="nombre_cliente"/>
 
-            <p:outputLabel for="nombre_cliente" value = "Nombre: "/>
-            <p:inputText id="nombre_cliente" value = "#{clienteBean.cliente.nombre}" required="true"/>
+                    <p:outputLabel for="correo_cliente" value = "Correo: "/>
+                    <p:inputText id="correo_cliente" value = "#{clienteBean.cliente.correo}" required="true" />
+                    <p:messages for="correo_cliente"/>
 
-            <p:outputLabel value = "Correo: "/>
-            <p:inputText id="correo_cliente" value = "#{clienteBean.cliente.correo}" />
-
-        </h:panelGrid>
-        <p:commandButton value="Registrar Cliente" action= "#{clienteBean.registrarCliente()}" update="@form"/>
-        <p:growl/>
-    </h:form>
+                </h:panelGrid>
+                <p:commandButton value="Registrar Cliente" action= "#{clienteBean.registrarCliente()}" update="@form"/>
+                <p:growl for="mensaje_registro_cliente" showDetail="true"/>
+            </h:form>
+    </p:panel>
 </h:body>
 
 </html>

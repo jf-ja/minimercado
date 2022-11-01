@@ -3,6 +3,7 @@ package co.edu.uniquindio.minimercado.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class Persona implements Serializable {
 
     private String nombre;
 
+    @Email
+    @Column(unique = true, length = 200)
     private String correo;
 
     public Persona(String cedula, String nombre, String correo) {
