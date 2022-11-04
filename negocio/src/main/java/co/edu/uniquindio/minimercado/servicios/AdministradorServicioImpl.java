@@ -1,8 +1,10 @@
 package co.edu.uniquindio.minimercado.servicios;
 
 import co.edu.uniquindio.minimercado.entidades.Administrador;
+import co.edu.uniquindio.minimercado.entidades.Categoria;
 import co.edu.uniquindio.minimercado.entidades.Producto;
 import co.edu.uniquindio.minimercado.repo.AdministradorRepo;
+import co.edu.uniquindio.minimercado.repo.CategoriaRepo;
 import co.edu.uniquindio.minimercado.repo.ProductoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +19,12 @@ public class AdministradorServicioImpl implements AdministradorServicio{
     private AdministradorRepo administradorRepo;
 
     private ProductoRepo productoRepo;
+    private CategoriaRepo categoriaRepo;
 
-    public AdministradorServicioImpl(AdministradorRepo administradorRepo, ProductoRepo productoRepo) {
+    public AdministradorServicioImpl(AdministradorRepo administradorRepo, ProductoRepo productoRepo, CategoriaRepo categoriaRepo) {
         this.administradorRepo = administradorRepo;
         this.productoRepo = productoRepo;
+        this.categoriaRepo = categoriaRepo;
     }
 
     @Override
@@ -37,9 +41,15 @@ public class AdministradorServicioImpl implements AdministradorServicio{
     @Override
     public Producto crearProducto(Producto producto) throws Exception {
 
-        boolean productoExiste = productoExiste(producto.getCodigo());
-        if(productoExiste){
+       // boolean productoExiste = productoExiste(producto.getCodigo());
+        Producto productoExisteNombre = productoRepo.obtenerProductoPorNombre(producto.getNombre());
+       /* if(productoExiste){
             throw new Exception("El producto con este codigo ya existe");
+        }
+
+        */
+        if(productoExisteNombre != null){
+            throw new Exception("El producto con este nombre ya existe");
         }
         return productoRepo.save(producto);
     }
@@ -54,9 +64,20 @@ public class AdministradorServicioImpl implements AdministradorServicio{
         return producto.get();
     }
 
+    @Override
+    public List<Producto> obtenerProductosPorNombre(String nombre) throws Exception {
+
+        List<Producto> productos= productoRepo.obtenerProductosPorNombre(nombre);
+        if(productos == null){
+            throw new Exception("No existe el producto con ese nombre ");
+        }
+        return productos;
+    }
+
     public boolean productoExiste(Integer codigo){
         return productoRepo.findById(codigo).orElse(null)!=null;
     }
+
 
     @Override
     public Producto actualizarProducto(Producto producto) throws Exception {
@@ -80,5 +101,16 @@ public class AdministradorServicioImpl implements AdministradorServicio{
     @Override
     public List<Producto> listarProductos() {
         return productoRepo.findAll();
+    }
+
+
+    @Override
+    public List<Categoria> listarCategorias() {return categoriaRepo.findAll();
+    }
+
+
+    @Override
+    public Categoria obtenerCategoria(Integer codigo) {
+        return categoriaRepo.findById(codigo).orElse(null);
     }
 }

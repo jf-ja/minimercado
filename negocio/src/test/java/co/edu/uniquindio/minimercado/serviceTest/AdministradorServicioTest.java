@@ -44,8 +44,8 @@ public class AdministradorServicioTest {
     @Sql("classpath:dataset.sql")
     public void crearProductoTest() throws Exception {
         try {
-            Categoria categoria = new Categoria(2 , "Aseo");
-            Producto producto = new Producto(5443,"Escoba" , categoria, 10000.00, null, 5, null);
+            Categoria categoria = administradorServicio.obtenerCategoria(1);
+            Producto producto = new Producto("Escoba" , categoria, 10000.00, "01","02","2021", 5, null);
             Producto productoCreado = administradorServicio.crearProducto(producto);
             Assertions.assertNotNull(productoCreado);
             System.out.println(productoCreado.getNombre());
@@ -96,8 +96,29 @@ public class AdministradorServicioTest {
 
     @Test
     @Sql("classpath:dataset.sql")
+    public void obtenerCategoriaTest() throws Exception {
+        try {
+            Categoria categoria = administradorServicio.obtenerCategoria(2);
+            Assertions.assertNotNull(categoria);
+            System.out.println(categoria.getNombre());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataset.sql")
     public void listarProductosTest() {
         List<Producto> productos = administradorServicio.listarProductos();
         productos.forEach(System.out::println);
+    }
+
+    //-------------------------categorias---------------------
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarCategoriasTest() {
+        List<Categoria> categorias = administradorServicio.listarCategorias();
+        categorias.forEach(System.out::println);
     }
 }

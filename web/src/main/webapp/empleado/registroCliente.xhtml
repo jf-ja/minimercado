@@ -31,7 +31,7 @@
                     <p:messages for="correo_cliente"/>
 
                 </h:panelGrid>
-                <p:commandButton value="Registrar Cliente" action= "#{clienteBean.registrarCliente()}" update="@form"/>
+                <p:commandButton value="Registrar Cliente" action= "#{clienteBean.registrarCliente()}" icon="pi pi-plus-circle" update="@form"/>
                 <p:growl for="mensaje_registro_cliente" showDetail="true"/>
             </h:form>
     </p:panel>

@@ -2,6 +2,7 @@ package co.edu.uniquindio.minimercado.entidades;
 
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ public class Empleado extends Persona implements Serializable {
 
     @ToString.Exclude
     @ElementCollection
+    @Nullable
     private List<String> telefonos;
 
     public Empleado(String cedula, String nombre, String correo, List<String> telefonos) {

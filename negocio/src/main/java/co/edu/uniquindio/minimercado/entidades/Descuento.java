@@ -20,9 +20,14 @@ public class Descuento implements Serializable {
 
     private Double porcentaje;
 
+    /*
     @ToString.Exclude
     @OneToMany(mappedBy = "descuento")
     private List<Producto> productos;
+
+
+     */
+
 
     public Descuento(Integer codigo, Double porcentaje) {
         this.codigo = codigo;

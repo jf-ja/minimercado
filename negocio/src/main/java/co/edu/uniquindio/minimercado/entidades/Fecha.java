@@ -24,11 +24,11 @@ public class Fecha implements Serializable {
     private String mes;
 
     private String anio;
-
+/*
     @ToString.Exclude
     @OneToMany(mappedBy = "fecha")
     private List<Producto> productos;
-
+*/
     @ToString.Exclude
     @OneToMany(mappedBy = "fecha")
     private List<Factura> facturas;

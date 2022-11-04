@@ -9,12 +9,81 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <h:outputStylesheet name="styles.css" library="css" />
     <title>Minimercado Inicio</title>
 </h:head>
 
 
 <h:body style="background-color: darkgray">
     <h1>Pagina Inicio</h1>
+
+    <div id = "barra_nav" >
+
+        <header>
+            <div class="px-3 py-2 text-bg-dark">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <a href="/" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                            <h:graphicImage library = "img" name="logo.png" styleClass="img-icon me-2" />
+                            <span class="fs-4">MINIMARKET</span>
+                        </a>
+
+
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            <li>
+                                <a href="#" class="nav-link text-secondary">
+                                    INICIO
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/empleado/registroCliente.xhtml" class="nav-link text-white">
+                                    REGISTRO CLIENTES
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/administrador/crearProducto.xhtml" class="nav-link text-white">
+                                    PRODUCTOS
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/empleado/crearFactura.xhtml" class="nav-link text-white">
+                                    FACTURAS
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/empleado/buscarProducto.xhtml" class="nav-link text-white">
+
+                                    CONSULTAR PRODUCTOS
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3 py-2 border-bottom mb-3">
+                <div class="container d-flex flex-wrap justify-content-center">
+
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light text-dark me-2">Login</button>
+                        <button type="button" class="btn btn-primary">Sign-up</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+        <ul>
+            <li><a href="/empleado/registroCliente.xhtml" > Registro Cliente </a> </li>
+            <li><a href="/administrador/crearProducto.xhtml" > Crear Producto </a> </li>
+            <li><a href="/empleado/crearFactura.xhtml" > Crear Factura </a> </li>
+            <li><a href="/empleado/buscarProducto.xhtml" > Buscar Producto </a> </li>
+        </ul>
+
+    </div>
 </h:body>
 
 </html>

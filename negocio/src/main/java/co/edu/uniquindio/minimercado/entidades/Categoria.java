@@ -2,9 +2,7 @@ package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +15,8 @@ import java.util.List;
 public class Categoria implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Integer codigo;
 
     private String nombre;
@@ -26,8 +26,7 @@ public class Categoria implements Serializable {
     @OneToMany(mappedBy = "categoria")
     private List<Producto> productos;
 
-    public Categoria(Integer codigo, String nombre) {
-        this.codigo = codigo;
+    public Categoria(String nombre) {
         this.nombre = nombre;
     }
 }

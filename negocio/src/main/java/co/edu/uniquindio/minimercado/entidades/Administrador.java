@@ -1,6 +1,7 @@
 package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ public class Administrador extends Persona implements Serializable {
 
     @ToString.Exclude
     @ElementCollection
+    @Nullable
     private List<String> telefonos;
 
     public Administrador(String cedula, String nombre, String correo, String password, List<String> telefonos) {

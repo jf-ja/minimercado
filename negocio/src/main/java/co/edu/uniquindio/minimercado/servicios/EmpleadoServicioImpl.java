@@ -1,6 +1,7 @@
 package co.edu.uniquindio.minimercado.servicios;
 
 import co.edu.uniquindio.minimercado.entidades.Cliente;
+import co.edu.uniquindio.minimercado.entidades.Empleado;
 import co.edu.uniquindio.minimercado.entidades.Factura;
 import co.edu.uniquindio.minimercado.repo.ClienteRepo;
 import co.edu.uniquindio.minimercado.repo.EmpleadoRepo;
@@ -18,10 +19,15 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
     private FacturaRepo facturaRepo;
     private ClienteRepo clienteRepo;
 
-    public EmpleadoServicioImpl(FacturaRepo facturaRepo, ClienteRepo clienteRepo) {
+    private EmpleadoRepo empleadoRepo;
+
+    public EmpleadoServicioImpl(FacturaRepo facturaRepo, ClienteRepo clienteRepo, EmpleadoRepo empleadoRepo) {
         this.facturaRepo = facturaRepo;
         this.clienteRepo = clienteRepo;
+        this.empleadoRepo = empleadoRepo;
     }
+
+    //------------------------------------FACTURA----------------------------------------
 
     @Override
     public Factura crearFactura(Factura factura) throws Exception {
@@ -31,11 +37,34 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
         if (facturaExiste){
             throw new Exception("La factura con este codigo ya existe");
         }
+
+        Optional<Cliente> cliente = clienteRepo.findById(factura.getCliente().getCedula());
+        Optional<Empleado> empleado = empleadoRepo.findById(factura.getEmpleado().getCedula());
+
+        if (cliente.isEmpty() ){
+            throw new Exception("NO EXISTE EL CLIENTE CON ESTA CEDULA");
+        }
+        if (empleado.isEmpty() ){
+            throw new Exception("NO EXISTE EL EMPLEADO CON ESTA CEDULA");
+        }
+
         return facturaRepo.save(factura);
     }
 
     public boolean facturaExiste(Integer codigo){
         return facturaRepo.findById(codigo).orElse(null)!=null;
+    }
+
+    @Override
+    public Factura obtenerFacturaPorCodigo(Integer codigo) throws Exception {
+
+        Optional<Factura> facturaGuardado = facturaRepo.findById(codigo);
+
+        if(facturaGuardado.isEmpty()){
+            throw new Exception("La factura NO EXISTE");
+        }
+
+        return facturaGuardado.get();
     }
 
     @Override

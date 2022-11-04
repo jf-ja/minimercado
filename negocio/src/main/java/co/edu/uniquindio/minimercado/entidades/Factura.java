@@ -2,10 +2,7 @@ package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,6 +15,7 @@ import java.util.List;
 public class Factura implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     private Double total;
@@ -35,6 +33,7 @@ public class Factura implements Serializable {
     @OneToMany(mappedBy = "factura")
     private List<FacturaProducto> facturaProductos;
 
+    @Builder
     public Factura(Integer codigo, Double total, Empleado empleado, Cliente cliente, Fecha fecha) {
         this.codigo = codigo;
         this.total = total;

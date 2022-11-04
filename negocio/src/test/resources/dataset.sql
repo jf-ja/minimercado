@@ -76,13 +76,15 @@ insert into pedido values(2,20,200,"222","1","33");
 insert into pedido values(3,30,300,"333","1","22");
 insert into pedido values(4,40,400,"444","1","11");
 
-/* Producto: codigo, nombre, precio, unidades, categoria_codigo, descuento_codigo, fecha_codigo*/
-insert into producto values(1, "Palomitas",1500, 20, 4, 2, 3);
-insert into producto values(2, "Jabon", 5000, 50, 1, 2, 2);
-insert into producto values(3, "Frijoles", 7300, 70, 2, 2, 3);
-insert into producto values(4, "papas", 6800, 45, 4, 2, 1);
-insert into producto values(5, "Limpido", 1400, 42, 1, 2, 2);
-insert into producto values(6, "esponja", 7800, 13, 1, 2, 3);
+/* Producto: codigo, anio, descuento, dia, mes, nombre, precio, unidades, categoria_codigo */
+
+insert into producto values(1, 2022, 0.30, 12, 02, "Palomitas",1500, 20, 2);
+insert into producto values(2, 2023, null, 04, 11, "Jabon", 5000, 50, 1);
+insert into producto values(3, 2023, 0.10, 06, 08, "Frijoles", 7300, 70, 2);
+insert into producto values(4, 2022, 0.20, 05, 12, "papas", 6800, 45, 4);
+insert into producto values(5, 2024, 0.50, 12, 06, "Limpido", 1400, 42, 1);
+insert into producto values(6, 2024, null, 02, 12, "esponja", 7800, 13, 1);
+
 
 /* Factura_Producto: codigo,factura_codigo, producto_codigo */
 insert into factura_producto values(1,2,3);
@@ -94,6 +96,8 @@ insert into factura_producto values(6,3,5);
 insert into factura_producto values(7,2,6);
 insert into factura_producto values(8,4,4);
 insert into factura_producto values(9,2,4);
+
+
 
 /* Pedido_Producto: codigo, pedido_codigo, producto_codigo*/
 insert into pedido_producto values(1,1,4);
