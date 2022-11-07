@@ -11,7 +11,7 @@ public class PaginaPrincipalConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/")
-                .setViewName("forward:/index.xhtml");
+                .setViewName("forward:/empleado/menuEmpleado.xhtml");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }

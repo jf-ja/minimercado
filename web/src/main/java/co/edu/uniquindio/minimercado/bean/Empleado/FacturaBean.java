@@ -1,4 +1,4 @@
-package co.edu.uniquindio.minimercado.bean;
+package co.edu.uniquindio.minimercado.bean.Empleado;
 
 import co.edu.uniquindio.minimercado.entidades.Cliente;
 import co.edu.uniquindio.minimercado.entidades.Empleado;
