@@ -27,7 +27,6 @@ public class ClienteBean implements Serializable {
     @Setter
     private List<Cliente> clientes;
 
-
     @Getter
     @Setter
     private List<Cliente> clientesSeleccionados;
@@ -35,21 +34,34 @@ public class ClienteBean implements Serializable {
     @Autowired
     private EmpleadoServicio empleadoServicio;
 
+    //----actualizar---
+
+    private boolean editar;
+
     @PostConstruct
     public void init(){
         cliente = new Cliente();
         clientesSeleccionados = new ArrayList<>();
         clientes = empleadoServicio.listarClientes();
+        editar=false;
     }
     public void registrarCliente(){
         try {
-            Cliente registro = empleadoServicio.registrarCliente(cliente);
-            clientes.add(registro);
 
-            cliente = new Cliente();
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "REGISTRO EXITOSO");
-            FacesContext.getCurrentInstance().addMessage("mensaje_registro_cliente", fm);
+            if(!editar) {
 
+                Cliente registro = empleadoServicio.registrarCliente(cliente);
+                clientes.add(registro);
+
+                cliente = new Cliente();
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "REGISTRO EXITOSO");
+                FacesContext.getCurrentInstance().addMessage("mensaje_registro_cliente", fm);
+
+            }else{
+                empleadoServicio.actualizarCliente(cliente);
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "ACTUALIZACION EXITOSA");
+                FacesContext.getCurrentInstance().addMessage("mensaje_registro_cliente", fm);
+            }
         } catch (Exception e) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", e.getMessage());
             FacesContext.getCurrentInstance().addMessage("mensaje_registro_cliente", fm);
@@ -66,12 +78,38 @@ public class ClienteBean implements Serializable {
                 empleadoServicio.eliminarCliente(cliente.getCedula());
                 clientes.remove(cliente);
                 }
+                clientesSeleccionados.clear();
             } catch (Exception e) {
                 FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", e.getMessage());
                 FacesContext.getCurrentInstance().addMessage("mensaje_eliminar_cliente", fm);
             }
+    }
 
 
+    public String getMensajeBorrar(){
+        if(clientesSeleccionados.isEmpty()){
+            return "Borrar";
+        }else{
+            return "Borrar (" + clientesSeleccionados.size() + ")" ;
+        }
 
+    }
+
+    public String getMensajeCrearEditar(){
+        if(editar){
+            return "EDITAR CLIENTE";
+        }
+            return "CREAR CLIENTE" ;
+    }
+
+
+    public void seleccionarCliente(Cliente clienteSelec){
+        this.cliente=clienteSelec;
+        editar=true;
+    }
+
+    public void crearClienteDialog(){
+        this.cliente= new Cliente();
+        editar=false;
     }
 }

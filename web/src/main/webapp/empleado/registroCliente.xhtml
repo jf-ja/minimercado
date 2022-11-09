@@ -83,14 +83,14 @@
 
             <p:toolbar>
                 <p:toolbarGroup>
-                     <p:commandButton value="Registrar" icon="pi pi-plus" styleClass="ui-button-success me-3" onclick="PF('registrar_cliente').show()" />
-                     <p:commandButton id="boton_borrar" value="Borrar" icon="pi pi-trash" disabled="#{clienteBean.clientesSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{clienteBean.eliminarClientes()}" update="crud_cliente:lista_clientes" />
+                     <p:commandButton value="Registrar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{clienteBean.crearClienteDialog()}" update="dialogo_crear" oncomplete="PF('registrar_cliente').show()" />
+                     <p:commandButton id="boton_borrar" value="#{clienteBean.mensajeBorrar}" icon="pi pi-trash" disabled="#{clienteBean.clientesSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{clienteBean.eliminarClientes()}" update="crud_cliente:lista_clientes,@this" />
                 </p:toolbarGroup>
             </p:toolbar>
 
 
 
-            <p:dataTable id="lista_clientes" value="#{clienteBean.clientes}" var="cliente" paginator="true" rows="3"
+            <p:dataTable id="lista_clientes" value="#{clienteBean.clientes}" var="cliente" paginator="true" rows="10"
                          rowKey="#{cliente.cedula}"
                          paginatorPosition="bottom" rowSelectMode="add"
                          selection="#{clienteBean.clientesSeleccionados}">
@@ -115,10 +115,14 @@
                     <h:outputText value="#{cliente.correo}"/>
                 </p:column>
 
+                <p:column headerText="" >
+                    <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{clienteBean.seleccionarCliente(cliente)}" oncomplete="PF('registrar_cliente').show()" update="dialogo_crear"/>
+                </p:column>
+
             </p:dataTable>
         </h:form>
 
-        <p:dialog widgetVar="registrar_cliente" modal="true" header="REGISTRAR CLIENTE" showEffect="fade">
+        <p:dialog id="dialogo_crear" widgetVar="registrar_cliente" modal="true" header="#{clienteBean.mensajeCrearEditar}" showEffect="fade">
 
 
             <h1>REGISTRO CLIENTE</h1>
@@ -138,7 +142,7 @@
                         <p:messages for="correo_cliente"/>
 
                     </h:panelGrid>
-                    <p:commandButton value="Registrar Cliente" action= "#{clienteBean.registrarCliente()}" icon="pi pi-plus-circle" update="@form,crud_cliente:lista_clientes"/>
+                    <p:commandButton value="#{clienteBean.mensajeCrearEditar}" action= "#{clienteBean.registrarCliente()}" icon="pi pi-plus-circle" update="@form,crud_cliente:lista_clientes"/>
                     <p:growl for="mensaje_registro_cliente" showDetail="true"/>
                 </h:form>
 
