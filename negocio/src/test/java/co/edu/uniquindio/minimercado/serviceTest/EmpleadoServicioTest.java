@@ -45,7 +45,7 @@ public class EmpleadoServicioTest {
         Fecha fecha = fechaRepo.obtenerFechaPorCodigo(2).orElse(null);
         Empleado empleado = empleadoRepo.findById("0111").orElse(null);
         Cliente cliente = clienteRepo.findById("1111").orElse(null);
-        Factura factura = Factura.builder().codigo(5).total(12400.00).fecha(fecha).empleado(empleado).cliente(cliente).build();
+        Factura factura = Factura.builder().total(12400.00).fecha(fecha).empleado(empleado).cliente(cliente).build();
 
         try {
             Factura nuevo = empleadoServicio.crearFactura(factura);

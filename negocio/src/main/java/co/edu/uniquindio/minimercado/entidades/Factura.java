@@ -1,6 +1,7 @@
 package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Factura implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Integer codigo;
 
     private Double total;
@@ -26,16 +28,16 @@ public class Factura implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
+    @Nullable
     @ManyToOne
     private Fecha fecha;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "factura")
-    private List<FacturaProducto> facturaProductos;
+    @ManyToMany(mappedBy = "facturas")
+    private List<Producto> productos;
 
     @Builder
-    public Factura(Integer codigo, Double total, Empleado empleado, Cliente cliente, Fecha fecha) {
-        this.codigo = codigo;
+    public Factura(Double total, Empleado empleado, Cliente cliente, Fecha fecha) {
         this.total = total;
         this.empleado = empleado;
         this.cliente = cliente;

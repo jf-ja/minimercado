@@ -32,11 +32,14 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
     @Override
     public Factura crearFactura(Factura factura) throws Exception {
 
+        /*
         boolean facturaExiste = facturaExiste(factura.getCodigo());
 
         if (facturaExiste){
             throw new Exception("La factura con este codigo ya existe");
         }
+
+         */
 
         Optional<Cliente> cliente = clienteRepo.findById(factura.getCliente().getCedula());
         Optional<Empleado> empleado = empleadoRepo.findById(factura.getEmpleado().getCedula());
@@ -162,4 +165,17 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
     }
 
 
+    //----------------------------Empleado---------------------------------
+
+    @Override
+    public Empleado obtenerEmpleadoPorCedula(String cedula) throws Exception {
+
+        Optional<Empleado> empleadoGuardado = empleadoRepo.findById(cedula);
+
+        if(empleadoGuardado.isEmpty()){
+            throw new Exception("El empleado NO EXISTE");
+        }
+
+        return empleadoGuardado.get();
+    }
 }

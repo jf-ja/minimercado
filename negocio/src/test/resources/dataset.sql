@@ -86,7 +86,9 @@ insert into producto values(5, 2024, 0.50, 12, 06, "Limpido", 1400, 42, 1);
 insert into producto values(6, 2024, null, 02, 12, "esponja", 7800, 13, 1);
 
 
+
 /* Factura_Producto: codigo,factura_codigo, producto_codigo */
+/*
 insert into factura_producto values(1,2,3);
 insert into factura_producto values(2,3,4);
 insert into factura_producto values(3,2,1);
@@ -96,13 +98,15 @@ insert into factura_producto values(6,3,5);
 insert into factura_producto values(7,2,6);
 insert into factura_producto values(8,4,4);
 insert into factura_producto values(9,2,4);
-
+*/
 
 
 /* Pedido_Producto: codigo, pedido_codigo, producto_codigo*/
+/*
 insert into pedido_producto values(1,1,4);
 insert into pedido_producto values(2,3,3);
 insert into pedido_producto values(3,2,2);
 insert into pedido_producto values(4,4,1);
+ */
 
 

@@ -54,8 +54,8 @@ public class Producto implements Serializable {
     private List<PedidoProducto> pedidoProductos;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "producto")
-    private List<FacturaProducto> facturaProductos;
+    @ManyToMany
+    private List<Factura> facturas;
 
     @Builder
     public Producto(String nombre, Categoria categoria, double precio, String dia, String mes, String anio, Integer unidades, Double descuento) {

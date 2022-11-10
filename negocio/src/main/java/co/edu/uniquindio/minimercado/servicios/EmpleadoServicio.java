@@ -1,6 +1,7 @@
 package co.edu.uniquindio.minimercado.servicios;
 
 import co.edu.uniquindio.minimercado.entidades.Cliente;
+import co.edu.uniquindio.minimercado.entidades.Empleado;
 import co.edu.uniquindio.minimercado.entidades.Factura;
 
 import java.util.List;
@@ -33,5 +34,7 @@ public interface EmpleadoServicio {
 
     public List<Cliente> listarClientes();
 
+    //----------------------------Empleado-------------------------------
 
+    public Empleado obtenerEmpleadoPorCedula(String cedula) throws Exception;
 }

@@ -16,7 +16,7 @@
 
 
 <h:body style="background-color: whitesmoke">
-    <p:panel>
+
         <div id = "barra_nav" >
             <header>
                 <div class="px-4 py-4 text-bg-dark">
@@ -75,50 +75,123 @@
                 </div>
             </header>
         </div>
-        <h1>REGISTRO PRODUCTO</h1>
-        <h:form>
-            <h:panelGrid columns="3" cellpadding="5" >
 
-                <p:outputLabel for="nombre_producto" value = "Nombre Producto: "/>
-                <p:inputText id="nombre_producto" value = "#{productoBean.producto.nombre}" required="true"/>
-                <p:messages for="nombre_producto"/>
 
-                <p:outputLabel for="precio_producto" value = "Precio Producto: "/>
-                <p:inputText id="precio_producto" value = "#{productoBean.producto.precio}" required="true"/>
-                <p:messages for="precio_producto"/>
+        <h:form id="crud_producto">
 
-                <p:outputLabel for="unidades_producto" value = "Unidades Producto: "/>
-                <p:inputText id="unidades_producto" value = "#{productoBean.producto.unidades}" required="true"/>
-                <p:messages for="unidades_producto"/>
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Registrar" icon="pi pi-plus" styleClass="ui-button-success me-3" action="#{productoBean.crearProductoDialog()}" update="dialogo_crear" oncomplete="PF('registrar_producto').show()" />
+                    <p:commandButton id="boton_borrar" value="#{productoBean.mensajeBorrar}" icon="pi pi-trash" disabled="#{productoBean.productosSeleccionados.size()==0}" styleClass="ui-button-danger" action="#{productoBean.eliminarProductos()}" update="crud_producto:lista_productos,@this" />
+                </p:toolbarGroup>
+            </p:toolbar>
 
-                <p:outputLabel for="fecha_dia" value = "Dia Vencimiento: "/>
-                <p:inputText id="fecha_dia" value = "#{productoBean.producto.dia}" required="true" />
-                <p:messages for="fecha_dia"/>
 
-                <p:outputLabel for="fecha_mes" value = "Mes Vencimiento: "/>
-                <p:inputText id="fecha_mes" value = "#{productoBean.producto.mes}" required="true" />
-                <p:messages for="fecha_mes"/>
 
-                <p:outputLabel for="fecha_anio" value = "Anio Vencimiento: "/>
-                <p:inputText id="fecha_anio" value = "#{productoBean.producto.anio}" required="true" />
-                <p:messages for="fecha_anio"/>
+            <p:dataTable id="lista_productos" value="#{productoBean.productos}" var="producto" paginator="true" rows="10"
+                         rowKey="#{producto.codigo}"
+                         paginatorPosition="bottom" rowSelectMode="add"
+                         selection="#{productoBean.productosSeleccionados}">
 
-                <p:outputLabel value = "Descuento Producto: "/>
-                <p:inputText id="descuento_producto" value = "#{productoBean.producto.descuento}"/>
-                <p:messages for="descuento_producto"/>
+                <p:ajax event="rowSelect" update="crud_producto:boton_borrar" />
+                <p:ajax event="rowUnselect" update="crud_producto:boton_borrar" />
+                <p:ajax event="rowSelectCheckbox" update="crud_producto:boton_borrar" />
+                <p:ajax event="rowUnselectCheckbox" update="crud_producto:boton_borrar" />
+                <p:ajax event="toggleSelect" update="crud_producto:boton_borrar" />
 
-                <p:outputLabel for="categoria_producto" value = "Categoria Producto: "/>
-                <p:selectOneMenu id="categoria_producto" value="#{productoBean.producto.categoria}" converter="#{categoriaConverter}">
-                    <f:selectItem itemLabel="Seleccione la categoria" noSelectionOption="true" itemValue="#{null}"/>
-                    <f:selectItems value="#{productoBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria}"/>
-                </p:selectOneMenu>
+                <p:column selectionMode="multiple" exportable="false" />
 
-            </h:panelGrid>
-            <p:commandButton value="Registrar Producto" action= "#{productoBean.registrarProducto()}" icon="pi pi-plus-circle" update="@form"/>
-            <p:growl for="mensaje_registro_producto" showDetail="true"/>
+                <p:column headerText="Codigo" >
+                    <h:outputText value="#{producto.codigo}"/>
+                </p:column>
 
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{producto.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Precio" >
+                    <h:outputText value="#{producto.precio}"/>
+                </p:column>
+
+                <p:column headerText="Unidades" >
+                    <h:outputText value="#{producto.unidades}"/>
+                </p:column>
+
+                <p:column headerText="Dia Vencimiento" >
+                    <h:outputText value="#{producto.dia}"/>
+                </p:column>
+
+                <p:column headerText="Mes vencimiento" >
+                    <h:outputText value="#{producto.mes}"/>
+                </p:column>
+
+                <p:column headerText="Anio vencimiento" >
+                    <h:outputText value="#{producto.anio}"/>
+                </p:column>
+
+                <p:column headerText="Descuento" >
+                    <h:outputText value="#{producto.descuento}"/>
+                </p:column>
+
+                <p:column headerText="Categoria" >
+                    <h:outputText value="#{producto.categoria.nombre}"/>
+                </p:column>
+
+                <p:column headerText="" >
+                    <p:commandButton styleClass="edit-button rounded-button ui-button-success" icon="pi pi-pencil" action="#{productoBean.seleccionarProducto(producto)}" oncomplete="PF('registrar_producto').show()" update="dialogo_crear"/>
+                </p:column>
+
+            </p:dataTable>
         </h:form>
-    </p:panel>
+
+
+        <p:dialog id="dialogo_crear" widgetVar="registrar_producto" modal="true" header="#{productoBean.mensajeCrearEditar}" showEffect="fade">
+
+        <h1>REGISTRO PRODUCTO</h1>
+            <h:form>
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <p:outputLabel for="nombre_producto" value = "Nombre Producto: "/>
+                    <p:inputText id="nombre_producto" value = "#{productoBean.producto.nombre}" required="true"/>
+                    <p:messages for="nombre_producto"/>
+
+                    <p:outputLabel for="precio_producto" value = "Precio Producto: "/>
+                    <p:inputText id="precio_producto" value = "#{productoBean.producto.precio}" required="true"/>
+                    <p:messages for="precio_producto"/>
+
+                    <p:outputLabel for="unidades_producto" value = "Unidades Producto: "/>
+                    <p:inputText id="unidades_producto" value = "#{productoBean.producto.unidades}" required="true"/>
+                    <p:messages for="unidades_producto"/>
+
+                    <p:outputLabel for="fecha_dia" value = "Dia Vencimiento: "/>
+                    <p:inputText id="fecha_dia" value = "#{productoBean.producto.dia}" required="true" />
+                    <p:messages for="fecha_dia"/>
+
+                    <p:outputLabel for="fecha_mes" value = "Mes Vencimiento: "/>
+                    <p:inputText id="fecha_mes" value = "#{productoBean.producto.mes}" required="true" />
+                    <p:messages for="fecha_mes"/>
+
+                    <p:outputLabel for="fecha_anio" value = "Anio Vencimiento: "/>
+                    <p:inputText id="fecha_anio" value = "#{productoBean.producto.anio}" required="true" />
+                    <p:messages for="fecha_anio"/>
+
+                    <p:outputLabel value = "Descuento Producto: "/>
+                    <p:inputText id="descuento_producto" value = "#{productoBean.producto.descuento}"/>
+                    <p:messages for="descuento_producto"/>
+
+                    <p:outputLabel for="categoria_producto" value = "Categoria Producto: "/>
+                    <p:selectOneMenu id="categoria_producto" value="#{productoBean.producto.categoria}" converter="#{categoriaConverter}">
+                        <f:selectItem itemLabel="Seleccione la categoria" noSelectionOption="true" itemValue="#{null}"/>
+                        <f:selectItems value="#{productoBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}" itemValue="#{categoria}"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <p:commandButton value="Registrar Producto" action= "#{productoBean.registrarProducto()}" icon="pi pi-plus-circle" update="@form,crud_producto:lista_productos"/>
+                <p:growl for="mensaje_registro_producto" showDetail="true"/>
+
+            </h:form>
+        </p:dialog>
+
 </h:body>
 
 </html>

@@ -16,7 +16,7 @@
 
 
 <h:body style="background-color: whitesmoke">
-    <p:panel>
+
         <div id = "barra_nav" >
             <header>
                 <div class="px-4 py-4 text-bg-dark">
@@ -76,27 +76,86 @@
             </header>
         </div>
 
-        <h1>REALIZAR FACTURA CLIENTE</h1>
-        <h:form>
-            <h:panelGrid columns="3" cellpadding="5" >
+        <h:form id="crud_producto">
 
-                <p:outputLabel for="cedula_cliente" value = "Cedula: "/>
-                <p:inputText id="cedula_cliente" value = "#{clienteBean.cliente.cedula}" required="true"/>
-                <p:messages for="cedula_cliente"/>
+            <p:dataTable id="lista_productos" value="#{facturaBean.productos}" var="producto" paginator="true" rows="10"
+                         rowKey="#{producto.codigo}"
+                         paginatorPosition="bottom" rowSelectMode="add"
+                         selection="#{facturaBean.productosSeleccionados}">
 
-                <p:outputLabel for="nombre_cliente" value = "Nombre: "/>
-                <p:inputText id="nombre_cliente" value = "#{clienteBean.cliente.nombre}" required="true"/>
-                <p:messages for="nombre_cliente"/>
 
-                <p:outputLabel for="correo_cliente" value = "Correo: "/>
-                <p:inputText id="correo_cliente" value = "#{clienteBean.cliente.correo}" required="true" />
-                <p:messages for="correo_cliente"/>
+                <p:ajax event="rowSelect" update="crud_factura:total_factura" />
+                <p:ajax event="rowUnselect" update="crud_factura:total_factura" />
+                <p:ajax event="rowSelectCheckbox" update="crud_factura:total_factura" />
+                <p:ajax event="rowUnselectCheckbox" update="crud_factura:total_factura" />
+                <p:ajax event="toggleSelect" update="crud_factura:total_factura" />
 
-            </h:panelGrid>
-            <p:commandButton value="Registrar Cliente" action= "#{clienteBean.registrarCliente()}" update="@form"/>
-            <p:growl for="mensaje_registro_cliente" showDetail="true"/>
+
+                <p:column selectionMode="multiple" exportable="false" />
+
+                <p:column headerText="Codigo" >
+                    <h:outputText value="#{producto.codigo}"/>
+                </p:column>
+
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{producto.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Precio" >
+                    <h:outputText value="#{producto.precio}"/>
+                </p:column>
+
+                <p:column headerText="Unidades" >
+                    <h:outputText value="#{producto.unidades}"/>
+                </p:column>
+
+                <p:column headerText="Dia Vencimiento" >
+                    <h:outputText value="#{producto.dia}"/>
+                </p:column>
+
+                <p:column headerText="Mes vencimiento" >
+                    <h:outputText value="#{producto.mes}"/>
+                </p:column>
+
+                <p:column headerText="Anio vencimiento" >
+                    <h:outputText value="#{producto.anio}"/>
+                </p:column>
+
+                <p:column headerText="Descuento" >
+                    <h:outputText value="#{producto.descuento}"/>
+                </p:column>
+
+                <p:column headerText="Categoria" >
+                    <h:outputText value="#{producto.categoria.nombre}"/>
+                </p:column>
+
+            </p:dataTable>
+
         </h:form>
-    </p:panel>
+
+
+            <h1>REALIZAR FACTURA CLIENTE</h1>
+
+            <h:form id="crud_factura">
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <p:outputLabel for="cedula_cliente" value = "Cedula: "/>
+                    <p:inputText id="cedula_cliente" value = "#{facturaBean.cedula}" />
+                    <p:messages for="cedula_cliente"/>
+
+                    <p:outputLabel for="total_factura" value = "Total: "/>
+                    <p:inputText id="total_factura" placeholder="#{facturaBean.calcularTotalFactura()}"/>
+
+                    <p:messages for="total_factura"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Registrar Factura" action= "#{facturaBean.crearFactura()}" update="@form"/>
+                <p:growl for="mensaje_registro_factura" showDetail="true"/>
+            </h:form>
+
+
+
 </h:body>
 
 </html>
