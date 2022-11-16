@@ -2,11 +2,10 @@ package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,6 +17,8 @@ import java.util.List;
 public class Pedido implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Include
     private Integer codigo;
 
     private Integer cantidad;
@@ -30,14 +31,13 @@ public class Pedido implements Serializable {
     @ManyToOne
     private Provedor provedor;
 
-    @ManyToOne
-    private Fecha fecha;
+    private LocalDate fecha;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "pedido")
-    private List<PedidoProducto> pedidoProductos;
+    @ManyToMany
+    private List<Producto> productos;
 
-    public Pedido(Integer codigo, Integer cantidad, Integer total, Administrador administrador, Provedor provedor, Fecha fecha) {
+    public Pedido(Integer codigo, Integer cantidad, Integer total, Administrador administrador, Provedor provedor, LocalDate fecha) {
         this.codigo = codigo;
         this.cantidad = cantidad;
         this.total = total;

@@ -5,6 +5,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,45 +27,27 @@ public class Producto implements Serializable {
     private Categoria categoria;
 
     private double precio;
-/*
-    @ManyToOne
-    @Nullable
-    private Fecha fecha;
 
- */
+    private LocalDate fechaVencimiento;
 
-    private String dia;
-
-    private String mes;
-
-    private String anio;
     private Integer unidades;
     @Nullable
     private Double descuento;
 
-/*
-    @ManyToOne
-    @Nullable
-    private Descuento descuento;
-
- */
-
     @ToString.Exclude
-    @OneToMany(mappedBy = "producto")
-    private List<PedidoProducto> pedidoProductos;
-
-    @ToString.Exclude
-    @ManyToMany
+    @ManyToMany(mappedBy = "productos")
     private List<Factura> facturas;
 
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "productos")
+    private List<Pedido> pedidos;
+
     @Builder
-    public Producto(String nombre, Categoria categoria, double precio, String dia, String mes, String anio, Integer unidades, Double descuento) {
+    public Producto(String nombre, Categoria categoria, double precio, LocalDate fechaVencimiento, Integer unidades, Double descuento) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
-        this.dia = dia;
-        this.mes = mes;
-        this.anio = anio;
+        this.fechaVencimiento=fechaVencimiento;
         this.unidades = unidades;
         this.descuento = descuento;
     }

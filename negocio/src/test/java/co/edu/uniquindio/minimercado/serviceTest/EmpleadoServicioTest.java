@@ -3,10 +3,8 @@ package co.edu.uniquindio.minimercado.serviceTest;
 import co.edu.uniquindio.minimercado.entidades.Cliente;
 import co.edu.uniquindio.minimercado.entidades.Empleado;
 import co.edu.uniquindio.minimercado.entidades.Factura;
-import co.edu.uniquindio.minimercado.entidades.Fecha;
 import co.edu.uniquindio.minimercado.repo.ClienteRepo;
 import co.edu.uniquindio.minimercado.repo.EmpleadoRepo;
-import co.edu.uniquindio.minimercado.repo.FechaRepo;
 import co.edu.uniquindio.minimercado.servicios.EmpleadoServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,9 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 
 @SpringBootTest
@@ -33,8 +31,6 @@ public class EmpleadoServicioTest {
     @Autowired
     private ClienteRepo clienteRepo;
 
-    @Autowired
-    private FechaRepo fechaRepo;
 
     //-------------------------------------FACTURA----------------------------------------------
 
@@ -42,7 +38,7 @@ public class EmpleadoServicioTest {
     @Sql("classpath:dataset.sql")
     public void crearFacturaTest() throws Exception {
 
-        Fecha fecha = fechaRepo.obtenerFechaPorCodigo(2).orElse(null);
+        LocalDate fecha = LocalDate.now();
         Empleado empleado = empleadoRepo.findById("0111").orElse(null);
         Cliente cliente = clienteRepo.findById("1111").orElse(null);
         Factura factura = Factura.builder().total(12400.00).fecha(fecha).empleado(empleado).cliente(cliente).build();

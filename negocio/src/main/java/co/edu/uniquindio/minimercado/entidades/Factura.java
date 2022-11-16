@@ -5,6 +5,8 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -29,15 +31,14 @@ public class Factura implements Serializable {
     private Cliente cliente;
 
     @Nullable
-    @ManyToOne
-    private Fecha fecha;
+    private LocalDate fecha;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "facturas")
+    @ManyToMany
     private List<Producto> productos;
 
     @Builder
-    public Factura(Double total, Empleado empleado, Cliente cliente, Fecha fecha) {
+    public Factura(Double total, Empleado empleado, Cliente cliente, LocalDate fecha) {
         this.total = total;
         this.empleado = empleado;
         this.cliente = cliente;

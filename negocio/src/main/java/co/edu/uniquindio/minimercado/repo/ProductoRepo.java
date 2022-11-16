@@ -14,7 +14,7 @@ public interface ProductoRepo extends JpaRepository<Producto,Integer> {
     @Query ("select p from Producto p where p.categoria.nombre = :nombreCategoria")
     List<Producto> obtenerPorductosPorCategoria(String nombreCategoria);
 
-    @Query("select f.producto from FacturaProducto f where f.factura.cliente.cedula = :cedula")
+    @Query("select f.productos from Factura f where f.cliente.cedula = :cedula")
     List<Producto> obtenerProductosCompradosPorCliente(String cedula);
 
     @Query("select producto from Producto producto where producto.codigo =:codigo")

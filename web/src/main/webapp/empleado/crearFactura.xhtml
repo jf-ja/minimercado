@@ -109,16 +109,8 @@
                     <h:outputText value="#{producto.unidades}"/>
                 </p:column>
 
-                <p:column headerText="Dia Vencimiento" >
-                    <h:outputText value="#{producto.dia}"/>
-                </p:column>
-
-                <p:column headerText="Mes vencimiento" >
-                    <h:outputText value="#{producto.mes}"/>
-                </p:column>
-
-                <p:column headerText="Anio vencimiento" >
-                    <h:outputText value="#{producto.anio}"/>
+                <p:column headerText="Fecha Vencimiento" >
+                    <h:outputText value="#{producto.fechaVencimiento}"/>
                 </p:column>
 
                 <p:column headerText="Descuento" >
@@ -139,9 +131,13 @@
             <h:form id="crud_factura">
                 <h:panelGrid columns="3" cellpadding="5" >
 
-                    <p:outputLabel for="cedula_cliente" value = "Cedula: "/>
-                    <p:inputText id="cedula_cliente" value = "#{facturaBean.cedula}" />
+                    <p:outputLabel for="cedula_cliente" value = "Cedula Del Cliente: "/>
+                    <p:inputText id="cedula_cliente" value = "#{facturaBean.cedulaCliente}" />
                     <p:messages for="cedula_cliente"/>
+
+                    <p:outputLabel for="cedula_empleado" value = "Cedula Del Empleado: "/>
+                    <p:inputText id="cedula_empleado" value = "#{facturaBean.cedulaEmpleado}" />
+                    <p:messages for="cedula_empleado"/>
 
                     <p:outputLabel for="total_factura" value = "Total: "/>
                     <p:inputText id="total_factura" placeholder="#{facturaBean.calcularTotalFactura()}"/>

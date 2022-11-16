@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,8 +45,9 @@ public class AdministradorServicioTest {
     @Sql("classpath:dataset.sql")
     public void crearProductoTest() throws Exception {
         try {
+            LocalDate fecha = LocalDate.now();
             Categoria categoria = administradorServicio.obtenerCategoria(1);
-            Producto producto = new Producto("Escoba" , categoria, 10000.00, "01","02","2021", 5, null);
+            Producto producto = new Producto("Escoba" , categoria, 10000.00, fecha, 5, null);
             Producto productoCreado = administradorServicio.crearProducto(producto);
             Assertions.assertNotNull(productoCreado);
             System.out.println(productoCreado.getNombre());

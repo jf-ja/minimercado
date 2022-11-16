@@ -18,6 +18,9 @@ import java.util.List;
 public class Empleado extends Persona implements Serializable {
 
     @ToString.Exclude
+    private String password;
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "empleado")
     private List<Factura> facturas;
 
@@ -26,10 +29,8 @@ public class Empleado extends Persona implements Serializable {
     @Nullable
     private List<String> telefonos;
 
-    public Empleado(String cedula, String nombre, String correo, List<String> telefonos) {
+    public Empleado(String cedula, String nombre, String correo, String password) {
         super(cedula, nombre, correo);
-        this.telefonos = telefonos;
+        this.password = password;
     }
-
-
 }

@@ -34,11 +34,13 @@ insert into cliente_telefonos values ("1111", "3134567990");
 insert into cliente_telefonos values ("2222", "3124965011");
 insert into cliente_telefonos values ("3333", "3155222287");
 
-/* Empleado : cedula, correo, nombre */
-insert into empleado values ("0111", "empleado1@gmail.com", "Andres");
-insert into empleado values ("0222", "empleado2@gmail.com", "Karla");
-insert into empleado values ("0333", "empleado3@gmail.com", "Noah");
-insert into empleado values ("0444", "empleado4@gmail.com", "Diana");
+
+/* Empleado : cedula, correo, nombre ,password*/
+insert into empleado values ("0111", "empleado1@gmail.com", "Andres" ,"010");
+insert into empleado values ("0222", "empleado2@gmail.com", "Karla","020");
+insert into empleado values ("0333", "empleado3@gmail.com", "Noah","030");
+insert into empleado values ("0444", "empleado4@gmail.com", "Diana","040");
+
 
 /* Empleado_telefonos : cedula, telefonos*/
 insert into empleado_telefonos values ("0111", "3123456100");
@@ -51,6 +53,8 @@ insert into categoria values (1, "Aseo");
 insert into categoria values (2, "Granos");
 insert into categoria values (3, "Lacteos");
 insert into categoria values (4, "Pasabocas");
+insert into categoria values (5, "Bebidas");
+insert into categoria values (6, "Helados");
 
 /* descuento : codigo, porcentaje*/
 insert into descuento values (1,30);
@@ -58,55 +62,27 @@ insert into descuento values (2,10);
 insert into descuento values (3,15);
 insert into descuento values (4,5);
 
-/* Fecha: codigo, año, dia, mes*/
-insert into fecha values(1,"2021","1","Enero");
-insert into fecha values(2,"2021","2","Febrero");
-insert into fecha values(3,"2021","3","Enero");
-insert into fecha values(4,"2021","4","Abril");
-
-/* Factura: codigo, total, cliente_cedula, empleado_cedula, fecha_codigo*/
-insert into factura values(1,3600,"1111","0222",2);
-insert into factura values(2,78000,"2222","0111",1);
-insert into factura values(3,15400,"2222","0444",2);
-insert into factura values(4,78000,"3333","0111",4);
-
-/* Pedido: codigo, cantidad, total, administrador_cedula, fecha_codigo, provedor_cedula*/
-insert into pedido values(1,10,100,"111","1","44");
-insert into pedido values(2,20,200,"222","1","33");
-insert into pedido values(3,30,300,"333","1","22");
-insert into pedido values(4,40,400,"444","1","11");
-
-/* Producto: codigo, anio, descuento, dia, mes, nombre, precio, unidades, categoria_codigo */
-
-insert into producto values(1, 2022, 0.30, 12, 02, "Palomitas",1500, 20, 2);
-insert into producto values(2, 2023, null, 04, 11, "Jabon", 5000, 50, 1);
-insert into producto values(3, 2023, 0.10, 06, 08, "Frijoles", 7300, 70, 2);
-insert into producto values(4, 2022, 0.20, 05, 12, "papas", 6800, 45, 4);
-insert into producto values(5, 2024, 0.50, 12, 06, "Limpido", 1400, 42, 1);
-insert into producto values(6, 2024, null, 02, 12, "esponja", 7800, 13, 1);
+/* Factura: codigo, fecha, total, cliente_cedula, empleado_cedula*/
+insert into factura values(1,"2022-10-01",3600,"1111","0222");
+insert into factura values(2,"2022-11-05",78000,"2222","0111");
+insert into factura values(3,"2022-10-08",15400,"2222","0444");
+insert into factura values(4,"2022-12-09",78000,"3333","0111");
 
 
+/* Pedido: codigo, cantidad, fecha, total, administrador_cedula,provedor_cedula*/
+insert into pedido values(1,16,"2022-05-01",100000,"111","44");
+insert into pedido values(2,8,"2022-10-06",50000,"111","33");
+insert into pedido values(3,12,"2022-07-02",300000,"111","22");
+insert into pedido values(4,15,"2022-09-09",450000,"111","11");
 
-/* Factura_Producto: codigo,factura_codigo, producto_codigo */
-/*
-insert into factura_producto values(1,2,3);
-insert into factura_producto values(2,3,4);
-insert into factura_producto values(3,2,1);
-insert into factura_producto values(4,1,2);
-insert into factura_producto values(5,2,2);
-insert into factura_producto values(6,3,5);
-insert into factura_producto values(7,2,6);
-insert into factura_producto values(8,4,4);
-insert into factura_producto values(9,2,4);
-*/
+/* Producto: codigo, descuento, nombre, precio, unidades, categoria_codigo */
+insert into producto values(1,  0.30, "2022-10-01",  "Palomitas",1500, 20, 2);
+insert into producto values(2,  null, "2023-04-05",  "Jabon", 5000, 50, 1);
+insert into producto values(3,  0.10, "2024-10-01",  "Frijoles", 7300, 70, 2);
+insert into producto values(4,  0.20, "2022-10-08",  "papas", 6800, 45, 4);
+insert into producto values(5,  0.50, "2023-12-20",  "Limpido", 1400, 42, 1);
+insert into producto values(6,  null, "2025-10-19",  "esponja", 7800, 13, 1);
 
 
-/* Pedido_Producto: codigo, pedido_codigo, producto_codigo*/
-/*
-insert into pedido_producto values(1,1,4);
-insert into pedido_producto values(2,3,3);
-insert into pedido_producto values(3,2,2);
-insert into pedido_producto values(4,4,1);
- */
 
 

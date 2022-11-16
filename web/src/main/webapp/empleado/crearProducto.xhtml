@@ -117,16 +117,8 @@
                     <h:outputText value="#{producto.unidades}"/>
                 </p:column>
 
-                <p:column headerText="Dia Vencimiento" >
-                    <h:outputText value="#{producto.dia}"/>
-                </p:column>
-
-                <p:column headerText="Mes vencimiento" >
-                    <h:outputText value="#{producto.mes}"/>
-                </p:column>
-
-                <p:column headerText="Anio vencimiento" >
-                    <h:outputText value="#{producto.anio}"/>
+                <p:column headerText="Fecha Vencimiento" >
+                    <h:outputText value="#{producto.fechaVencimiento}"/>
                 </p:column>
 
                 <p:column headerText="Descuento" >
@@ -163,17 +155,9 @@
                     <p:inputText id="unidades_producto" value = "#{productoBean.producto.unidades}" required="true"/>
                     <p:messages for="unidades_producto"/>
 
-                    <p:outputLabel for="fecha_dia" value = "Dia Vencimiento: "/>
-                    <p:inputText id="fecha_dia" value = "#{productoBean.producto.dia}" required="true" />
-                    <p:messages for="fecha_dia"/>
-
-                    <p:outputLabel for="fecha_mes" value = "Mes Vencimiento: "/>
-                    <p:inputText id="fecha_mes" value = "#{productoBean.producto.mes}" required="true" />
-                    <p:messages for="fecha_mes"/>
-
-                    <p:outputLabel for="fecha_anio" value = "Anio Vencimiento: "/>
-                    <p:inputText id="fecha_anio" value = "#{productoBean.producto.anio}" required="true" />
-                    <p:messages for="fecha_anio"/>
+                    <p:outputLabel for="fechaVen_producto" value = "Fecha Vencimiento(dd/mm/aa) : "/>
+                    <p:datePicker id="fechaVen_producto" value = "#{productoBean.producto.fechaVencimiento}" required="true"/>
+                    <p:messages for="fechaVen_producto"/>
 
                     <p:outputLabel value = "Descuento Producto: "/>
                     <p:inputText id="descuento_producto" value = "#{productoBean.producto.descuento}"/>

@@ -45,7 +45,11 @@ public class FacturaBean implements Serializable {
 
     @Getter
     @Setter
-    private String cedula;
+    private String cedulaCliente;
+
+    @Getter
+    @Setter
+    private String cedulaEmpleado;
 
     @Getter
     @Setter
@@ -74,12 +78,13 @@ public class FacturaBean implements Serializable {
     public void crearFactura(){
 
         try {
-            empleado = empleadoServicio.obtenerEmpleadoPorCedula("0111");
-            cliente = empleadoServicio.obtenerClientePorCedula(cedula);
+            empleado = empleadoServicio.obtenerEmpleadoPorCedula(cedulaEmpleado);
+            cliente = empleadoServicio.obtenerClientePorCedula(cedulaCliente);
             factura.setProductos(productosSeleccionados);
             factura.setTotal(totalCalculado);
             factura.setCliente(cliente);
             factura.setEmpleado(empleado);
+            factura.setFecha(LocalDate.now());
             empleadoServicio.crearFactura(factura);
             cliente = new Cliente();
             factura = new Factura();
