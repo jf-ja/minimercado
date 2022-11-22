@@ -1,8 +1,8 @@
 package co.edu.uniquindio.minimercado.serviceTest;
 
-import co.edu.uniquindio.minimercado.entidades.Administrador;
-import co.edu.uniquindio.minimercado.entidades.Categoria;
-import co.edu.uniquindio.minimercado.entidades.Producto;
+import co.edu.uniquindio.minimercado.entidades.*;
+import co.edu.uniquindio.minimercado.repo.AdministradorRepo;
+import co.edu.uniquindio.minimercado.repo.ProvedorRepo;
 import co.edu.uniquindio.minimercado.servicios.AdministradorServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,6 +21,9 @@ public class AdministradorServicioTest {
 
     @Autowired
     private AdministradorServicio administradorServicio;
+    private AdministradorRepo administradorRepo;
+    private ProvedorRepo provedorRepo;
+
 
 
     //------------------------------Login----------------------------------------
@@ -123,4 +126,22 @@ public class AdministradorServicioTest {
         List<Categoria> categorias = administradorServicio.listarCategorias();
         categorias.forEach(System.out::println);
     }
+
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void realizarPedidoTest() throws Exception{
+
+        LocalDate fecha = LocalDate.now();
+        Optional<Administrador> admin = administradorRepo.findById("111");
+        Provedor provedor = provedorRepo.findById("11").orElse(null);
+        Pedido pedido = Pedido.builder().cantidad(8).total(3200).administrador(admin).provedor(provedor).fecha(fecha).build();
+
+        try {
+            Pedido nuevo = administradorServicio.realizarPedido(pedido);
+            Assertions.assertNotNull(nuevo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

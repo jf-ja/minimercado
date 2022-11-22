@@ -13,4 +13,6 @@ public interface FacturaRepo extends JpaRepository<Factura,Integer> {
 
     @Query("select sum(f.total) from Factura f where f.fecha = :fecha")
     Double obtenerTotalDineroComprasPorDia(LocalDate fecha);
+
+
 }

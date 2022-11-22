@@ -26,6 +26,7 @@ public class Administrador extends Persona implements Serializable {
     @Nullable
     private List<String> telefonos;
 
+    @Builder
     public Administrador(String cedula, String nombre, String correo, String password) {
         super(cedula, nombre, correo);
         this.password = password;

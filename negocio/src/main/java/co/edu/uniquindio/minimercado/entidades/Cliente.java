@@ -28,6 +28,7 @@ public class Cliente extends Persona implements Serializable {
     @ElementCollection
     @Nullable
     private List<String> telefonos;
+
     @Builder
     public Cliente(String cedula, String nombre, String correo, List<String> telefonos) {
         super(cedula, nombre, correo);

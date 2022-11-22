@@ -16,7 +16,7 @@
 </h:head>
 
 
-<h:body style="background-color: darkgray">
+<h:body style="background-color: rgba(169,169,169,0)">
     <div id = "barra_nav" >
         <header>
             <div class="px-4 py-4 text-bg-dark">
@@ -62,11 +62,81 @@
 
 
     <h1>REALIZAR PEDIDO</h1>
-    <h:form>
+
+    <h:form id="crud_producto">
+
+        <p:dataTable id="lista_productos" value="#{pedidoBean.productos}" var="producto" paginator="true" rows="10"
+                     rowKey="#{producto.codigo}"
+                     paginatorPosition="bottom" rowSelectMode="add"
+                     selection="#{pedidoBean.productosSeleccionados}">
 
 
+            <p:ajax event="rowSelect" update="crud_pedido:total_pedido" />
+            <p:ajax event="rowUnselect" update="crud_pedido:total_pedido" />
+            <p:ajax event="rowSelectCheckbox" update="crud_pedido:total_pedido" />
+            <p:ajax event="rowUnselectCheckbox" update="crud_pedido:total_pedido" />
+            <p:ajax event="toggleSelect" update="crud_pedido:total_pedido" />
+
+
+            <p:column selectionMode="multiple" exportable="false" />
+
+            <p:column headerText="Codigo" >
+                <h:outputText value="#{producto.codigo}"/>
+            </p:column>
+
+            <p:column headerText="Nombre" >
+                <h:outputText value="#{producto.nombre}"/>
+            </p:column>
+
+            <p:column headerText="Precio" >
+                <h:outputText value="#{producto.precio}"/>
+            </p:column>
+
+            <p:column headerText="Unidades" >
+                <h:outputText value="#{producto.unidades}"/>
+            </p:column>
+
+            <p:column headerText="Fecha Vencimiento" >
+                <h:outputText value="#{producto.fechaVencimiento}"/>
+            </p:column>
+
+            <p:column headerText="Descuento" >
+                <h:outputText value="#{producto.descuento}"/>
+            </p:column>
+
+            <p:column headerText="Categoria" >
+                <h:outputText value="#{producto.categoria.nombre}"/>
+            </p:column>
+
+        </p:dataTable>
 
     </h:form>
+
+
+    <h1>REALIZAR PEDIDO</h1>
+
+    <h:form id="crud_pedido">
+        <h:panelGrid columns="3" cellpadding="5" >
+
+            <p:outputLabel for="cedula_admin" value = "Cedula Del Administrador: "/>
+            <p:inputText id="cedula_admin" value = "#{pedidoBean.administrador.cedula}" />
+            <p:messages for="cedula_admin"/>
+
+            <p:outputLabel for="cedula_provedor" value = "Cedula Del provedor: "/>
+            <p:inputText id="cedula_provedor" value = "#{pedidoBean.provedor.cedula}" />
+            <p:messages for="cedula_provedor"/>
+
+            <p:outputLabel for="total_pedido" value = "Total: "/>
+            <p:inputText id="total_pedido" placeholder="#{pedidoBean.calcularTotalPedido}"/>
+
+            <p:messages for="total_pedido"/>
+
+        </h:panelGrid>
+
+        <p:commandButton value="Registrar Pedido" action= "#{pedidoBean.crearPedido}" update="@form"/>
+        <p:growl for="mensaje_registro_pedido" showDetail="true"/>
+    </h:form>
+
 </h:body>
 
 </html>

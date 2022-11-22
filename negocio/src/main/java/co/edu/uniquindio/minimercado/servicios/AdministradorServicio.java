@@ -1,10 +1,9 @@
 package co.edu.uniquindio.minimercado.servicios;
 
-import co.edu.uniquindio.minimercado.entidades.Administrador;
-import co.edu.uniquindio.minimercado.entidades.Categoria;
-import co.edu.uniquindio.minimercado.entidades.Producto;
+import co.edu.uniquindio.minimercado.entidades.*;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdministradorServicio {
 
@@ -25,5 +24,8 @@ public interface AdministradorServicio {
     public List<Categoria> listarCategorias();
 
     public Categoria obtenerCategoria(Integer codigo);
+    public Pedido realizarPedido(Pedido pedido) throws Exception;
+    public Administrador obtenerAdministrador(String cedula) throws Exception;
+    public Provedor obtenerProvedor(String cedula) throws Exception;
 
 }

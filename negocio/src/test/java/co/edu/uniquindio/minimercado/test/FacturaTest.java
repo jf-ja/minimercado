@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @DataJpaTest
@@ -19,7 +20,7 @@ public class FacturaTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void obtenerTotalDineroComprasPorDia(){
-        Double total = facturaRepo.obtenerTotalDineroComprasPorDia("2", "Febrero", "2021");
+        Double total = facturaRepo.obtenerTotalDineroComprasPorDia(LocalDate.of(2022,8,10));
         System.out.println(total);
     }
 }

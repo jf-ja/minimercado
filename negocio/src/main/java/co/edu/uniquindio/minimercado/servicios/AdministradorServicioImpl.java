@@ -1,11 +1,7 @@
 package co.edu.uniquindio.minimercado.servicios;
 
-import co.edu.uniquindio.minimercado.entidades.Administrador;
-import co.edu.uniquindio.minimercado.entidades.Categoria;
-import co.edu.uniquindio.minimercado.entidades.Producto;
-import co.edu.uniquindio.minimercado.repo.AdministradorRepo;
-import co.edu.uniquindio.minimercado.repo.CategoriaRepo;
-import co.edu.uniquindio.minimercado.repo.ProductoRepo;
+import co.edu.uniquindio.minimercado.entidades.*;
+import co.edu.uniquindio.minimercado.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +16,8 @@ public class AdministradorServicioImpl implements AdministradorServicio{
 
     private ProductoRepo productoRepo;
     private CategoriaRepo categoriaRepo;
+    private ProvedorRepo provedorRepo;
+    private PedidoRepo pedidoRepo;
 
     public AdministradorServicioImpl(AdministradorRepo administradorRepo, ProductoRepo productoRepo, CategoriaRepo categoriaRepo) {
         this.administradorRepo = administradorRepo;
@@ -109,8 +107,43 @@ public class AdministradorServicioImpl implements AdministradorServicio{
     }
 
 
+
+
     @Override
     public Categoria obtenerCategoria(Integer codigo) {
         return categoriaRepo.findById(codigo).orElse(null);
+    }
+
+    @Override
+    public Pedido realizarPedido(Pedido pedido) throws Exception {
+        Optional<Provedor> provedor = provedorRepo.findById(pedido.getProvedor().getCedula());
+        Optional<Administrador> administrador = administradorRepo.findById(pedido.getAdministrador().getCedula());
+
+        if (provedor.isEmpty() ){
+            throw new Exception("NO EXISTE EL PROVEEDOR CON ESTA CEDULA");
+        }
+        if (administrador.isEmpty() ){
+            throw new Exception("NO EXISTE EL ADMINISTRADOR CON ESTA CEDULA");
+        }
+
+        return pedidoRepo.save(pedido);
+    }
+
+    @Override
+    public Administrador obtenerAdministrador(String cedula) throws Exception {
+        Optional<Administrador> administrador = administradorRepo.findById(cedula);
+        if(administrador.isEmpty()){
+            throw new Exception("No existe el administrador con esta cedula");
+        }
+        return administrador.get();
+    }
+
+    @Override
+    public Provedor obtenerProvedor(String cedula) throws Exception {
+        Optional<Provedor> provedor = provedorRepo.findById(cedula);
+        if(provedor.isEmpty()){
+            throw new Exception("No existe el provedor con esta cedula");
+        }
+        return provedor.get();
     }
 }

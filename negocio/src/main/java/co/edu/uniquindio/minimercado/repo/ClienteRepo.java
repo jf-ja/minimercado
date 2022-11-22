@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ClienteRepo extends JpaRepository<Cliente,String> {
 
     @Query("select f.cliente from Factura f where f.fecha = :fecha")
-    List<Cliente> obtenerClientesPorFacturaMes(LocalDate fecha);
+    List<Cliente> obtenerClientesPorFacturaMes(String fecha);
 
     Optional<Cliente> findByCorreo(String correo);
     List<Cliente> findAll();

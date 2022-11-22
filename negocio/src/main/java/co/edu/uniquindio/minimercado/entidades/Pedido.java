@@ -23,7 +23,7 @@ public class Pedido implements Serializable {
 
     private Integer cantidad;
 
-    private Integer total;
+    private Double total;
 
     @ManyToOne
     private Administrador administrador;
@@ -37,8 +37,8 @@ public class Pedido implements Serializable {
     @ManyToMany
     private List<Producto> productos;
 
-    public Pedido(Integer codigo, Integer cantidad, Integer total, Administrador administrador, Provedor provedor, LocalDate fecha) {
-        this.codigo = codigo;
+    @Builder
+    public Pedido( Integer cantidad, Double total, Administrador administrador, Provedor provedor, LocalDate fecha) {
         this.cantidad = cantidad;
         this.total = total;
         this.administrador = administrador;
