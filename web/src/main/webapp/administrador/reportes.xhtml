@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <h:outputStylesheet name="bootstrap.min.css" library="css" />
+    <h:outputScript name="bootstrap.bundle.min.js" library="js" />
+    <h:outputStylesheet name="styles.css" library="css" />
+    <title>Minimercado Inicio</title>
+</h:head>
+
+
+<h:body style="background-color: #e1e7ee">
+    <div id = "barra_nav" >
+        <header>
+            <div class="px-4 py-4 text-bg-dark">
+                <div class="container">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                        <a href="/administrador/menuAdministrador.xhtml" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                            <h:graphicImage library = "img" name="logo.png" styleClass="img-icon me-2" />
+                            <span class="fs-4">MINIMARKET</span>
+                        </a>
+
+
+                        <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                            <li>
+                                <a href="/administrador/menuAdministrador.xhtml" class="nav-link text-secondary">
+                                    INICIO
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/administrador/crearPedido.xhtml" class="nav-link text-white">
+                                    PEDIDO
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/administrador/reportes.xhtml" class="nav-link text-white">
+                                    REPORTES
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="px-3 py-2 border-bottom mb-3">
+            </div>
+        </header>
+        <div>
+
+
+
+           <h1>PROMEDIO DE LAS COMPRAS DE LOS CLIENTES</h1>
+
+            <h:form id="crud_compras">
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <p:outputLabel for="cedula_cliente" value = "Cedula Del Cliente: "/>
+                    <p:inputText id="cedula_cliente" value = "#{reportesBean.cedulaCliente}" />
+                    <p:messages for="cedula_cliente"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Consultar" action= "#{reportesBean.obtenerPromediosCompraCliente()}" update="@form,crud_compra_cliente:lista_compras_cliente"/>
+                <p:growl for="mensaje_promedio-compras" showDetail="true"/>
+            </h:form>
+
+
+            <h:form id="crud_compra_cliente">
+
+                <p:dataTable id="lista_compras_cliente" value="#{reportesBean.promedioCompras}" var="compras" paginator="true" rows="10"
+                             rowKey="#{compras.cedulaCliente}"
+                             paginatorPosition="bottom" rowSelectMode="add">
+
+
+                    <p:column selectionMode="multiple" exportable="false" />
+
+                    <p:column headerText="Cedula Cliente" >
+                        <h:outputText value="#{compras.cedulaCliente}"/>
+                    </p:column>
+
+                    <p:column headerText="Promedio Compras" >
+                        <h:outputText value="#{compras.promedioCompras}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre Cliente" >
+                        <h:outputText value="#{compras.nombreCliente}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+            <hr style="font-size: 100px"></hr>
+
+
+
+            <h1>CANTIDAD DE FACTURAS DEL EMPLEADO</h1>
+
+            <h:form id="crud_facturas">
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <p:outputLabel for="cedula_empleado" value = "Cedula Del Empleado: "/>
+                    <p:inputText id="cedula_empleado" value = "#{reportesBean.cedulaEmpleado}" />
+                    <p:messages for="cedula_empleado"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Consultar" action= "#{reportesBean.obtenerCantidadFacturasEmpleado()}" update="@form,crud_factura_empleado:lista_facturas_empleado"/>
+                <p:growl for="mensaje_promedio-compras" showDetail="true"/>
+            </h:form>
+
+
+            <h:form id="crud_factura_empleado">
+
+                <p:dataTable id="lista_facturas_empleado" value="#{reportesBean.candidadFacturas}" var="facturas" paginator="true" rows="10"
+                             rowKey="#{facturas.cedulaEmpleado}"
+                             paginatorPosition="bottom" rowSelectMode="add">
+
+
+                    <p:column selectionMode="multiple" exportable="false" />
+
+                    <p:column headerText="Cedula Empleado" >
+                        <h:outputText value="#{facturas.cedulaEmpleado}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad Facturas" >
+                        <h:outputText value="#{facturas.cantidadFacturas}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre Empleado" >
+                        <h:outputText value="#{facturas.nombreEmpleado}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+
+
+
+            <hr style="font-size: 100px"></hr>
+
+
+
+
+
+            <h1>FACTURA MAS ALTA</h1>
+
+            <h:form id="crud_facturamax">
+
+                <p:commandButton value="Consultar" action= "#{reportesBean.obtenerMaximaFactura()}" update="@form,crud_max_factura:lista_max_facturas"/>
+                <p:growl for="mensaje_max_factura" showDetail="true"/>
+            </h:form>
+
+
+            <h:form id="crud_max_factura">
+
+                <p:dataTable id="lista_max_facturas" value="#{reportesBean.maxFactura}" var="maxFactura" paginator="true" rows="10"
+                             rowKey="#{facturas.codigo}"
+                             paginatorPosition="bottom" rowSelectMode="add">
+
+
+                    <p:column selectionMode="multiple" exportable="false" />
+
+                    <p:column headerText="Codigo " >
+                        <h:outputText value="#{maxFactura.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha " >
+                        <h:outputText value="#{maxFactura.fecha}"/>
+                    </p:column>
+
+                    <p:column headerText="Total " >
+                        <h:outputText value="#{maxFactura.total}"/>
+                    </p:column>
+
+                    <p:column headerText="Cedula Cliente " >
+                        <h:outputText value="#{maxFactura.cliente.cedula}"/>
+                    </p:column>
+
+                    <p:column headerText="Cedula Empleado " >
+                        <h:outputText value="#{maxFactura.empleado.cedula}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+
+
+
+            <hr style="font-size: 100px"></hr>
+
+
+
+
+
+            <h1>PRODUCTOS DE UNA FACTURA</h1>
+
+            <h:form id="crud_productos">
+
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <p:outputLabel for="codigo_factura" value = "Codigo de la Factura: "/>
+                    <p:inputText id="codigo_factura" value = "#{reportesBean.codigoFactura}" />
+                    <p:messages for="codigo_factura"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Consultar" action= "#{reportesBean.obtenerProductosFactura()}" update="@form,crud_producto_factura:lista_productos_facturas"/>
+                <p:growl for="mensaje_productos_factura" showDetail="true"/>
+            </h:form>
+
+
+            <h:form id="crud_producto_factura">
+
+                <p:dataTable id="lista_productos_facturas" value="#{reportesBean.productosCompra}" var="producto" paginator="true" rows="10"
+                             rowKey="#{producto.codigo}"
+                             paginatorPosition="bottom" rowSelectMode="add">
+
+
+                    <p:column selectionMode="multiple" exportable="false" />
+
+                    <p:column headerText="Codigo" >
+                        <h:outputText value="#{producto.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Nombre" >
+                        <h:outputText value="#{producto.nombre}"/>
+                    </p:column>
+
+                    <p:column headerText="Precio" >
+                        <h:outputText value="#{producto.precio}"/>
+                    </p:column>
+
+                    <p:column headerText="Unidades" >
+                        <h:outputText value="#{producto.unidades}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha Vencimiento" >
+                        <h:outputText value="#{producto.fechaVencimiento}"/>
+                    </p:column>
+
+                    <p:column headerText="Descuento" >
+                        <h:outputText value="#{producto.descuento}"/>
+                    </p:column>
+
+                    <p:column headerText="Categoria" >
+                        <h:outputText value="#{producto.categoria.nombre}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+
+
+
+
+
+            <hr style="font-size: 100px"></hr>
+
+
+
+
+
+            <h1>FACTURAS EN UNA FECHA</h1>
+
+            <h:form id="crud_facturafecha">
+
+                <h:panelGrid columns="3" cellpadding="5" >
+
+                    <p:outputLabel for="fecha_factura" value = "Fecha Facturas: "/>
+                    <p:datePicker id="fecha_factura" value = "#{reportesBean.fecha}" required="true"/>
+                    <p:messages for="fecha_factura"/>
+
+                </h:panelGrid>
+
+                <p:commandButton value="Consultar" action= "#{reportesBean.obtenerFacturasFecha()}" update="@form,crud_factura_fecha:lista_facturas_fechas"/>
+                <p:growl for="mensaje_productos_factura" showDetail="true"/>
+            </h:form>
+
+
+            <h:form id="crud_factura_fecha">
+
+                <p:dataTable id="lista_facturas_fechas" value="#{reportesBean.facturasFecha}" var="fact" paginator="true" rows="10"
+                             rowKey="#{fact.codigo}"
+                             paginatorPosition="bottom" rowSelectMode="add">
+
+
+                    <p:column selectionMode="multiple" exportable="false" />
+
+                    <p:column headerText="Codigo " >
+                        <h:outputText value="#{fact.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha " >
+                        <h:outputText value="#{fact.fecha}"/>
+                    </p:column>
+
+                    <p:column headerText="Total " >
+                        <h:outputText value="#{fact.total}"/>
+                    </p:column>
+
+                    <p:column headerText="Cedula Cliente " >
+                        <h:outputText value="#{fact.cliente.cedula}"/>
+                    </p:column>
+
+                    <p:column headerText="Cedula Empleado " >
+                        <h:outputText value="#{fact.empleado.cedula}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+
+
+            <hr style="font-size: 100px"></hr>
+
+
+
+            <h1>PEDIDOS REALIZADOS</h1>
+
+            <h:form id="crud_pedi">
+                <p:commandButton value="REVISAR PEDIDOS" action= "#{reportesBean.obtenerTodosPedidos()}" update="@form,crud_pedido:lista_pedidos"/>
+                <p:growl for="mensaje_pedido" showDetail="true"/>
+            </h:form>
+
+
+            <h:form id="crud_pedido">
+
+                <p:dataTable id="lista_pedidos" value="#{reportesBean.pedidos}" var="pedido" paginator="true" rows="10"
+                             rowKey="#{pedido.codigo}"
+                             paginatorPosition="bottom" rowSelectMode="add">
+
+
+                    <p:column selectionMode="multiple" exportable="false" />
+
+                    <p:column headerText="Codigo " >
+                        <h:outputText value="#{pedido.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="Cantidad " >
+                        <h:outputText value="#{pedido.cantidad}"/>
+                    </p:column>
+
+                    <p:column headerText="Fecha " >
+                        <h:outputText value="#{pedido.fecha}"/>
+                    </p:column>
+
+                    <p:column headerText="Total " >
+                        <h:outputText value="#{pedido.total}"/>
+                    </p:column>
+
+                    <p:column headerText="Cedula Administrador " >
+                        <h:outputText value="#{pedido.administrador.cedula}"/>
+                    </p:column>
+
+                    <p:column headerText="Cedula Proveedor " >
+                        <h:outputText value="#{pedido.provedor.cedula}"/>
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </div>
+    </div>
+</h:body>
+
+</html>

@@ -1,11 +1,10 @@
 package co.edu.uniquindio.minimercado.servicios;
 
-import co.edu.uniquindio.minimercado.entidades.Cliente;
-import co.edu.uniquindio.minimercado.entidades.Empleado;
-import co.edu.uniquindio.minimercado.entidades.Factura;
+import co.edu.uniquindio.minimercado.entidades.*;
 import co.edu.uniquindio.minimercado.repo.ClienteRepo;
 import co.edu.uniquindio.minimercado.repo.EmpleadoRepo;
 import co.edu.uniquindio.minimercado.repo.FacturaRepo;
+import co.edu.uniquindio.minimercado.repo.ProductoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,25 +20,19 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
 
     private EmpleadoRepo empleadoRepo;
 
-    public EmpleadoServicioImpl(FacturaRepo facturaRepo, ClienteRepo clienteRepo, EmpleadoRepo empleadoRepo) {
+    private ProductoRepo productoRepo;
+
+    public EmpleadoServicioImpl(FacturaRepo facturaRepo, ClienteRepo clienteRepo, EmpleadoRepo empleadoRepo, ProductoRepo productoRepo) {
         this.facturaRepo = facturaRepo;
         this.clienteRepo = clienteRepo;
         this.empleadoRepo = empleadoRepo;
+        this.productoRepo = productoRepo;
     }
 
     //------------------------------------FACTURA----------------------------------------
 
     @Override
     public Factura crearFactura(Factura factura) throws Exception {
-
-        /*
-        boolean facturaExiste = facturaExiste(factura.getCodigo());
-
-        if (facturaExiste){
-            throw new Exception("La factura con este codigo ya existe");
-        }
-
-         */
 
         Optional<Cliente> cliente = clienteRepo.findById(factura.getCliente().getCedula());
         Optional<Empleado> empleado = empleadoRepo.findById(factura.getEmpleado().getCedula());
@@ -164,6 +157,12 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
         return clienteRepo.findAll();
     }
 
+    @Override
+    public List<Producto> obtenerProductosPorNombre(String nombre) throws Exception {
+        List<Producto> productosNombre = productoRepo.obtenerProductosPorNombre(nombre);
+        return productosNombre;
+    }
+
 
     //----------------------------Empleado---------------------------------
 
@@ -178,4 +177,21 @@ public class EmpleadoServicioImpl implements EmpleadoServicio{
 
         return empleadoGuardado.get();
     }
+
+
+
+
+    @Override
+    public Empleado login(String correo, String password) throws Exception {
+        Empleado empleado = empleadoRepo.compraboarAuntenticacion(correo, password);
+
+        if(empleado == null){
+            throw new Exception("Los Datos de Autentificacion son INCORRECTOS");
+        }
+        return empleado;
+    }
+
+
+
+
 }

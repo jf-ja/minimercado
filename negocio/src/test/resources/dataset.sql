@@ -66,7 +66,7 @@ insert into descuento values (4,5);
 insert into factura values(1,"2022-10-01",3600,"1111","0222");
 insert into factura values(2,"2022-11-05",78000,"2222","0111");
 insert into factura values(3,"2022-10-08",15400,"2222","0444");
-insert into factura values(4,"2022-12-09",78000,"3333","0111");
+insert into factura values(4,"2022-12-09",140000,"3333","0111");
 
 
 /* Pedido: codigo, cantidad, fecha, total, administrador_cedula,provedor_cedula*/

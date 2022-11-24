@@ -39,17 +39,13 @@
                                     PEDIDO
                                 </a>
                             </li>
-
-                            <div class="dropdown text-end">
-                                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle" />
+                            <li>
+                                <a href="/administrador/reportes.xhtml" class="nav-link text-white">
+                                    REPORTES
                                 </a>
-                                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                                    <li><a class="dropdown-item" href="#">Profile</a></li>
-                                    <li><hr class="dropdown-divider"></hr></li>
-                                    <li><a class="dropdown-item" href="#">Sign out</a></li>
-                                </ul>
-                            </div>
+                            </li>
+
+
                         </ul>
                     </div>
                 </div>
@@ -119,21 +115,24 @@
         <h:panelGrid columns="3" cellpadding="5" >
 
             <p:outputLabel for="cedula_admin" value = "Cedula Del Administrador: "/>
-            <p:inputText id="cedula_admin" value = "#{pedidoBean.administrador.cedula}" />
+            <p:inputText id="cedula_admin" value = "#{pedidoBean.cedulaAdministrador}" />
             <p:messages for="cedula_admin"/>
 
             <p:outputLabel for="cedula_provedor" value = "Cedula Del provedor: "/>
-            <p:inputText id="cedula_provedor" value = "#{pedidoBean.provedor.cedula}" />
+            <p:inputText id="cedula_provedor" value = "#{pedidoBean.cedulaProveedor}" />
             <p:messages for="cedula_provedor"/>
 
-            <p:outputLabel for="total_pedido" value = "Total: "/>
-            <p:inputText id="total_pedido" placeholder="#{pedidoBean.calcularTotalPedido}"/>
+            <p:outputLabel for="cantidad_pedido" value = "Cantidad del pedido: "/>
+            <p:inputText id="cantidad_pedido" value = "#{pedidoBean.cantidad}" />
+            <p:messages for="cantidad_pedido"/>
 
+            <p:outputLabel for="total_pedido" value = "Total: "/>
+            <p:inputText id="total_pedido" placeholder="#{pedidoBean.calcularTotalPedido()}"/>
             <p:messages for="total_pedido"/>
 
         </h:panelGrid>
 
-        <p:commandButton value="Registrar Pedido" action= "#{pedidoBean.crearPedido}" update="@form"/>
+        <p:commandButton value="Registrar Pedido" action= "#{pedidoBean.crearPedido()}" update="@form"/>
         <p:growl for="mensaje_registro_pedido" showDetail="true"/>
     </h:form>
 

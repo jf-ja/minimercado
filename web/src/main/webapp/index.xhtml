@@ -16,13 +16,13 @@
 </h:head>
 
 
-<h:body style="background-color: #adcbf6">
+<h:body style="background-color: #e8caca">
     <div id = "barra_nav" >
         <header>
             <div class="px-4 py-4 text-bg-dark">
                 <div class="container">
                     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                        <a href="/administrador/menuAdministrador.xhtml" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+                        <a href="/index.xhtml" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                             <h:graphicImage library = "img" name="logo.png" styleClass="img-icon me-2" />
                             <span class="fs-4">MINIMARKET</span>
                         </a>
@@ -30,20 +30,11 @@
 
                         <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                             <li>
-                                <a href="/administrador/menuAdministrador.xhtml" class="nav-link text-secondary">
+                                <a href="/index.xhtml" class="nav-link text-secondary">
                                     INICIO
                                 </a>
                             </li>
-                            <li>
-                                <a href="/administrador/crearPedido.xhtml" class="nav-link text-white">
-                                    PEDIDO
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/administrador/reportes.xhtml" class="nav-link text-white">
-                                    REPORTES
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
@@ -51,12 +42,40 @@
             <div class="px-3 py-2 border-bottom mb-3">
             </div>
         </header>
-        <div style="margin: 0 auto">
-            <a href="/administrador/menuAdministrador.xhtml" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+        <div>
+            <a href="/index.xhtml" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                 <h:graphicImage library = "img" name="mini.png" styleClass="img-icon me-2 " style="max-width: 90%; margin: 0 5rem"   />
             </a>
         </div>
     </div>
+
+
+
+    <div>
+        <p:panel header="LOGIN">
+            <h:form >
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:outputLabel for="email_login" value="Email:" />
+                    <p:inputText id="email_login" value="#{seguridadBean.email}" required="true" />
+                    <p:message for="email_login" />
+                    <p:outputLabel for="password_login" value="Password:" />
+                    <p:password id="password_login" value="#{seguridadBean.password}" required="true"
+                    />
+                    <p:message for="password_login" />
+                </h:panelGrid>
+                <p:commandButton value="Iniciar Sesión Administrador" action="#{seguridadBean.iniciarSesionAdmins()}"
+                                 styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                <p:growl for="login-bean" showDetail="true" />
+ 
+
+                
+                <p:commandButton style="margin: 20px" value="Iniciar Sesión Empleado" action="#{seguridadBean.iniciarSesionEmpleado()}"
+                                 styleClass="mt-4" update="@form" icon="pi pi-sign-in" iconPos="left" />
+                <p:growl for="login-bean" showDetail="true" />
+            </h:form>
+        </p:panel>
+    </div>
+
 </h:body>
 
 </html>

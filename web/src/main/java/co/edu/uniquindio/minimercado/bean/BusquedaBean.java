@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -23,27 +26,29 @@ public class BusquedaBean {
     private String busqueda;
 
     @Getter @Setter
-    @Value("#{param['busqueda']}")
-    private String busquedaParam;
+    private String nombreProducto;
 
     @Getter @Setter
     private List<Producto> productos;
 
     @Autowired
-    private AdministradorServicio administradorServicio;
+    private EmpleadoServicio empleadoServicio;
 
     @PostConstruct
     public void init() throws Exception {
-        if(busquedaParam != null && !busquedaParam.isEmpty()){
-            productos = administradorServicio.obtenerProductosPorNombre(busquedaParam);
-        }
+        productos= new ArrayList<>();
     }
 
 
-    public String buscar(){
-        if(!busqueda.isEmpty()){
-            return "/resultados_busquedad?faces-redirect=true&amp;busqueda=" + busqueda;
+    public void buscarProductosNombre(){
+        try {
+            productos = empleadoServicio.obtenerProductosPorNombre(nombreProducto);
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "Consulta Exitosa");
+            FacesContext.getCurrentInstance().addMessage("mensaje_consulta_producto", fm);
+        } catch (Exception e) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", e.getMessage());
+            FacesContext.getCurrentInstance().addMessage("mensaje_consulta_producto", fm);
+            throw new RuntimeException(e);
         }
-        return "";
     }
 }

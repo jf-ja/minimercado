@@ -1,10 +1,14 @@
 package co.edu.uniquindio.minimercado.servicios;
 
+import co.edu.uniquindio.minimercado.dto.CantidadFacturaEmpleadoDTO;
+import co.edu.uniquindio.minimercado.dto.CompraDTO;
 import co.edu.uniquindio.minimercado.entidades.*;
 import co.edu.uniquindio.minimercado.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +22,20 @@ public class AdministradorServicioImpl implements AdministradorServicio{
     private CategoriaRepo categoriaRepo;
     private ProvedorRepo provedorRepo;
     private PedidoRepo pedidoRepo;
+    private ClienteRepo clienteRepo;
+    private FacturaRepo facturaRepo;
 
-    public AdministradorServicioImpl(AdministradorRepo administradorRepo, ProductoRepo productoRepo, CategoriaRepo categoriaRepo) {
+    private EmpleadoRepo empleadoRepo;
+
+    public AdministradorServicioImpl(AdministradorRepo administradorRepo, ProductoRepo productoRepo, CategoriaRepo categoriaRepo, ProvedorRepo provedorRepo, PedidoRepo pedidoRepo, ClienteRepo clienteRepo, FacturaRepo facturaRepo, EmpleadoRepo empleadoRepo) {
         this.administradorRepo = administradorRepo;
         this.productoRepo = productoRepo;
         this.categoriaRepo = categoriaRepo;
+        this.provedorRepo = provedorRepo;
+        this.pedidoRepo = pedidoRepo;
+        this.clienteRepo = clienteRepo;
+        this.facturaRepo = facturaRepo;
+        this.empleadoRepo = empleadoRepo;
     }
 
     @Override
@@ -116,14 +129,14 @@ public class AdministradorServicioImpl implements AdministradorServicio{
 
     @Override
     public Pedido realizarPedido(Pedido pedido) throws Exception {
-        Optional<Provedor> provedor = provedorRepo.findById(pedido.getProvedor().getCedula());
         Optional<Administrador> administrador = administradorRepo.findById(pedido.getAdministrador().getCedula());
+        Optional<Provedor> provedor = provedorRepo.findById(pedido.getProvedor().getCedula());
 
-        if (provedor.isEmpty() ){
-            throw new Exception("NO EXISTE EL PROVEEDOR CON ESTA CEDULA");
-        }
         if (administrador.isEmpty() ){
             throw new Exception("NO EXISTE EL ADMINISTRADOR CON ESTA CEDULA");
+        }
+        if (provedor.isEmpty() ){
+            throw new Exception("NO EXISTE EL PROVEDOR CON ESTA CEDULA");
         }
 
         return pedidoRepo.save(pedido);
@@ -146,4 +159,73 @@ public class AdministradorServicioImpl implements AdministradorServicio{
         }
         return provedor.get();
     }
+
+    @Override
+    public List<CompraDTO> obtenerPromedioComprasCliente(String cedula) throws Exception {
+
+        Optional<Cliente> clienteGuardado = clienteRepo.findById(cedula);
+        if(clienteGuardado.isEmpty()){
+            throw new Exception("El cliente NO EXISTE");
+        }
+
+        List<CompraDTO> promCompras = facturaRepo.obtenerPromedioComprasCliente(cedula);
+
+        if (promCompras == null){
+            throw new Exception("El cliente NO tiene compras");
+        }
+        return promCompras;
+    }
+
+    @Override
+    public List<CantidadFacturaEmpleadoDTO> obtenerCantidadComprasEmpleado(String cedula) throws Exception {
+
+        Optional<Empleado> empleadoGuardado = empleadoRepo.findById(cedula);
+        if(empleadoGuardado.isEmpty()){
+            throw new Exception("El cliente NO EXISTE");
+        }
+
+        List<CantidadFacturaEmpleadoDTO> cantidadFacturas = facturaRepo.obtenerCantidadFacturasEmpleado(cedula);
+
+        if (cantidadFacturas == null){
+            throw new Exception("El cliente NO tiene compras");
+        }
+        return cantidadFacturas;
+    }
+
+    @Override
+    public List<Factura> obtenerMaximaFactura() throws Exception {
+        Factura factura = facturaRepo.obtenerMaximaFactura();
+        List<Factura> maxFactura= new ArrayList<>();
+        maxFactura.add(factura);
+        if(factura == null){
+            throw new Exception("NO EXISTEN FACTURAS");
+        }
+        return maxFactura;
+    }
+
+    @Override
+    public List<Producto> obtenerProductosCompra(Integer codigo) throws Exception {
+        List<Producto> productosCompra = facturaRepo.obtenerProductosCompra(codigo);
+        if(productosCompra.isEmpty()){
+            throw new Exception("No existe la factura con este codigo");
+        }
+        return productosCompra;
+    }
+
+    @Override
+    public List<Factura> obtenerFacturasFecha(LocalDate fecha) throws Exception {
+        List<Factura> facturasFecha = facturaRepo.obtenerFacturasFecha(fecha);
+        if(facturasFecha.isEmpty()){
+            throw new Exception("No hay facturas en esta fecha");
+        }
+        return facturasFecha;
+    }
+
+    @Override
+    public List<Pedido> obtenerPedidos() {
+       List<Pedido> pedidos = pedidoRepo.obtenerPedidosTodos();
+       return pedidos;
+    }
+
+
 }

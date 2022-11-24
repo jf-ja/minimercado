@@ -75,16 +75,65 @@
                 </div>
             </header>
         </div>
-        <h1>BUSCAR PRODUCTO</h1>
-        <h:form>
+
+        <h1>CONSULTAR PRODUCTO</h1>
+
+        <h:form id="crud_productos">
+
             <h:panelGrid columns="3" cellpadding="5" >
 
-            <div class="input-search ui-inputgroup">
-                <p:inputText placeholder="¿ Que producto estas buscando ?" required="true" value="#{busquedaBean.busqueda}" />
-                <p:commandButton update="@form" icon="pi pi-search" action="#{busquedaBean.buscar}" />
-            </div>
+                <p:outputLabel for="nombre_producto" value = "Nombre del producto: "/>
+                <p:inputText id="nombre_producto" value = "#{busquedaBean.nombreProducto}" />
+                <p:messages for="nombre_producto"/>
+
             </h:panelGrid>
+
+            <p:commandButton value="Consultar Producto" action= "#{busquedaBean.buscarProductosNombre()}" update="@form,crud_producto:lista_productos"/>
+            <p:growl for="mensaje_consulta_producto" showDetail="true"/>
         </h:form>
+
+
+        <h:form id="crud_producto">
+
+            <p:dataTable id="lista_productos" value="#{busquedaBean.productos}" var="producto" paginator="true" rows="10"
+                         rowKey="#{producto.codigo}"
+                         paginatorPosition="bottom" rowSelectMode="add">
+
+
+                <p:column selectionMode="multiple" exportable="false" />
+
+                <p:column headerText="Codigo" >
+                    <h:outputText value="#{producto.codigo}"/>
+                </p:column>
+
+                <p:column headerText="Nombre" >
+                    <h:outputText value="#{producto.nombre}"/>
+                </p:column>
+
+                <p:column headerText="Precio" >
+                    <h:outputText value="#{producto.precio}"/>
+                </p:column>
+
+                <p:column headerText="Unidades" >
+                    <h:outputText value="#{producto.unidades}"/>
+                </p:column>
+
+                <p:column headerText="Fecha Vencimiento" >
+                    <h:outputText value="#{producto.fechaVencimiento}"/>
+                </p:column>
+
+                <p:column headerText="Descuento" >
+                    <h:outputText value="#{producto.descuento}"/>
+                </p:column>
+
+                <p:column headerText="Categoria" >
+                    <h:outputText value="#{producto.categoria.nombre}"/>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
     </p:panel>
 </h:body>
 

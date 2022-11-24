@@ -46,6 +46,19 @@ public class PedidoBean implements Serializable {
     @Setter
     private Double totalCalculado;
 
+    @Getter
+    @Setter
+    private String cedulaAdministrador;
+
+    @Getter
+    @Setter
+    private String cedulaProveedor;
+
+    @Getter
+    @Setter
+    private int cantidad;
+
+
     @PostConstruct
     public void init(){
         pedido = new Pedido();
@@ -61,13 +74,15 @@ public class PedidoBean implements Serializable {
 
     public void crearPedido(){
         try {
-            administrador =administradorServicio.obtenerAdministrador(administrador.getCedula());
-            provedor =administradorServicio.obtenerProvedor(provedor.getCedula()) ;
+            administrador =administradorServicio.obtenerAdministrador(cedulaAdministrador);
+            provedor =administradorServicio.obtenerProvedor(cedulaProveedor);
+            totalCalculado = totalCalculado*cantidad;
             pedido.setProductos(productosSeleccionados);
             pedido.setTotal(totalCalculado);
             pedido.setAdministrador(administrador);
             pedido.setProvedor(provedor);
             pedido.setFecha(LocalDate.now());
+            pedido.setCantidad(cantidad);
             administradorServicio.realizarPedido(pedido);
             pedido = new Pedido();
             administrador= new Administrador();
@@ -77,7 +92,7 @@ public class PedidoBean implements Serializable {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta", "REGISTRO EXITOSO");
             FacesContext.getCurrentInstance().addMessage("mensaje_registro_pedido", fm);
 
-        } catch (Exception e) {
+        } catch (Exception e ) {
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", e.getMessage());
             FacesContext.getCurrentInstance().addMessage("mensaje_registro_pedido", fm);
             throw new RuntimeException(e);

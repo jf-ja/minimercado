@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -25,6 +26,7 @@ public class Provedor extends Persona implements Serializable {
 
     @ToString.Exclude
     @ElementCollection
+    @Nullable
     private List<String> telefonos;
 
     public Provedor(String cedula, String nombre, String correo, List<String> telefonos) {

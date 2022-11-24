@@ -1,6 +1,7 @@
 package co.edu.uniquindio.minimercado.entidades;
 
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +18,7 @@ import java.util.List;
 public class Pedido implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer codigo;
 
@@ -29,6 +30,7 @@ public class Pedido implements Serializable {
     private Administrador administrador;
 
     @ManyToOne
+    @Nullable
     private Provedor provedor;
 
     private LocalDate fecha;
